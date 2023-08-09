@@ -1,4 +1,4 @@
-## Repositorio de (@rrobertobt)[github.com/rrobertobt] - Lenguajes Formales Y De Programacion SS2023
+## Repositorio de [@rrobertobt](github.com/rrobertobt) - Lenguajes Formales Y De Programacion SS2023
 
 En este repositorio se encontraran todos los proyectos, practicas y tareas que se realicen a lo largo del curso.
 
