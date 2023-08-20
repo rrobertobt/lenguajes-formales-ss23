@@ -7,6 +7,7 @@ import lombok.Setter;
 @Getter @Setter
 public class Token {
     private String lexeme;
+    private String pattern;
     private TokenType type;
     private int line;
     private int column;
@@ -16,6 +17,9 @@ public class Token {
         this.type = type;
         this.line = line;
         this.column = column;
+//        this.pattern = pattern;
+
+        System.out.println("[CREATE TOKEN] Detected token: " + lexeme + " of type: " + type + " at line: " + line + " and column: " + column);
     }
 
     public Token() {
