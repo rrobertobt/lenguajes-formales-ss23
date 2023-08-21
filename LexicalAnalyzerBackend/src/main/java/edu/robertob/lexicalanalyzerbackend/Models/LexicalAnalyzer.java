@@ -3,21 +3,16 @@ package edu.robertob.lexicalanalyzerbackend.Models;
 import edu.robertob.lexicalanalyzerbackend.Utils.TokenType;
 import lombok.Getter;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-// Basic class that contains the logic of the lexical analyzer that is supposed to emulate python
-// We cannot use regular expressions because we need to know the line and column of the token, so we have to do it manually using
-// just if or switch statements
+import java.util.*;
+
 public class LexicalAnalyzer {
-    // TokenType is an enum that contains all the possible tokens types
     Map<String, TokenType> symbolsTable;
     @Getter
     List<Token> foundTokens;
 
     int currentLine = 1;
     int currentColumn = 1;
+
 
     public LexicalAnalyzer() {
         this.symbolsTable = new HashMap<>();
@@ -73,6 +68,33 @@ public class LexicalAnalyzer {
                     boolean foundClosingQuote = false;
                     while (stringEnd < codeChars.length) {
                         if (codeChars[stringEnd] == '"') {
+                            foundClosingQuote = true;
+                            break;
+                        }
+                        stringEnd++;
+                    }
+
+                    if (!foundClosingQuote) {
+                        // The string does not have a closing quote
+                        System.out.println("[ERROR] Unclosed string at index: " + i);
+                        token = new Token(code.substring(i, stringEnd), TokenType.INVALID_UNIDENTIFIED, this.currentLine, this.currentColumn);
+                        this.foundTokens.add(token);
+                        // Skip the string
+                        i = stringEnd;
+                    } else {
+                        // Create a token for the string
+                        token = new Token(code.substring(i, stringEnd + 1), TokenType.STRING, this.currentLine, this.currentColumn);
+                        this.foundTokens.add(token);
+                        // Skip the string
+                        i = stringEnd;
+                    }
+                    buffer = "";
+                    break;
+                case '\'':
+                    stringEnd = i + 1;
+                    foundClosingQuote = false;
+                    while (stringEnd < codeChars.length) {
+                        if (codeChars[stringEnd] == '\'') {
                             foundClosingQuote = true;
                             break;
                         }
@@ -191,18 +213,82 @@ public class LexicalAnalyzer {
                     buffer = "";
                     break;
                 case '<':
-                    this.createToken(buffer);
-                    this.createToken("<");
-                    buffer = "";
-                    break;
+                    // Check if the next character is a =, if so, it counts as comparison but less than or equal to
+                    if (i + 1 < codeChars.length && codeChars[i + 1] == '=') {
+                        this.createToken(buffer);
+                        this.createToken("<=");
+                        buffer = "";
+                        i++;
+                        break;
+                    } else {
+                        this.createToken(buffer);
+                        this.createToken("<");
+                        buffer = "";
+                        break;
+                    }
                 case '>':
-                    this.createToken(buffer);
-                    this.createToken(">");
-                    buffer = "";
-                    break;
+                    // Check if the next character is a =, if so, it counts as comparison but greater than or equal to
+                    if (i + 1 < codeChars.length && codeChars[i + 1] == '=') {
+                        this.createToken(buffer);
+                        this.createToken(">=");
+                        buffer = "";
+                        i++;
+                        break;
+                    } else {
+                        this.createToken(buffer);
+                        this.createToken(">");
+                        buffer = "";
+                        break;
+                    }
                 case '=':
-                    this.createToken(buffer);
-                    this.createToken("=");
+                    // Check if the next character is also a =, if so, it counts as comparison instead of assignment
+                    if (i + 1 < codeChars.length && codeChars[i + 1] == '=') {
+                        this.createToken(buffer);
+                        this.createToken("==");
+                        buffer = "";
+                        i++;
+                        break;
+                    } else {
+                        this.createToken(buffer);
+                        this.createToken("=");
+                        buffer = "";
+                        break;
+                    }
+                case '!':
+                    // Check if the next character is also a =, if so, it counts as comparison instead of assignment
+                    if (i + 1 < codeChars.length && codeChars[i + 1] == '=') {
+                        this.createToken(buffer);
+                        this.createToken("!=");
+                        buffer = "";
+                        i++;
+                        break;
+                    } else {
+                        token = new Token("!", TokenType.INVALID_UNIDENTIFIED, this.currentLine, this.currentColumn);
+                        // Invalid_unidentified token
+                        this.foundTokens.add(token);
+                        buffer = "";
+                        break;
+                    }
+                case '0':
+                case '1':
+                case '2':
+                case '3':
+                case '4':
+                case '5':
+                case '6':
+                case '7':
+                case '8':
+                case '9':
+                    int numberEnd = i + 1;
+                    while (numberEnd < codeChars.length && (codeChars[numberEnd] >= '0' && codeChars[numberEnd] <= '9')) {
+                        numberEnd++;
+                    }
+
+                    // Create a token for the number
+                    token = new Token(code.substring(i, numberEnd), TokenType.NUMERIC_CONSTANT, this.currentLine, this.currentColumn);
+                    this.foundTokens.add(token);
+                    // Skip the number
+                    i = numberEnd;
                     buffer = "";
                     break;
                 default:
@@ -211,7 +297,6 @@ public class LexicalAnalyzer {
             }
             this.currentColumn++;
             index++;
-
         }
     }
 
@@ -220,15 +305,21 @@ public class LexicalAnalyzer {
             return;
         }
 
+        /* Check if the lexeme is an identifier
+        Rules:
+        1. It must start with a letter or an underscore
+        2. It can only contain letters, numbers and underscores
+        3. It can't be a keyword
+        4. Case sensitive
+        Using regex is not allowed
+        */
+
         var tokenType = this.symbolsTable.get(lexeme);
         if (tokenType == null) {
             tokenType = TokenType.INVALID_UNIDENTIFIED;
         }
         Token token = new Token(lexeme, tokenType, this.currentLine, this.currentColumn);
         this.foundTokens.add(token);
-
-        //Testing
-
     }
     private void fillSymbolsTable() {
         // Keywords

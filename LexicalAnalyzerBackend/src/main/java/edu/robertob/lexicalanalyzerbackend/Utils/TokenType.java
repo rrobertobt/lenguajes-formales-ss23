@@ -20,7 +20,7 @@ public enum TokenType {
     PUNCTUATION_DOT,
     LITERAL,
     STRING,
-    CONSTANT,
+    NUMERIC_CONSTANT,
     COMMENT,
     LOGIC,
     INVALID_UNIDENTIFIED,
