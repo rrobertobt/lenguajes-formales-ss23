@@ -6,6 +6,9 @@ import lombok.Getter;
 
 import java.util.*;
 
+import static edu.robertob.lexicalanalyzerbackend.Utils.TokenUtils.*;
+
+// Clase base que contiene la lógica para el análisis léxico
 public class LexicalAnalyzer {
     Map<String, TokenType> symbolsTable;
     @Getter
@@ -31,21 +34,24 @@ public class LexicalAnalyzer {
         // Reseteando el contador de líneas y columnas
         this.currentLine = 1;
         this.currentColumn = 1;
-        int index = 0;
         String buffer = "";
         char [] codeChars = code.toCharArray();
         for (int i = 0; i < codeChars.length; i++) {
-//        for (char currentChar : codeChars) {
             char currentChar = codeChars[i];
-            System.out.println("[ANALYZER] Current char: " + currentChar + " at index: " + i);
+            // Primero verificamos si el caracter actual esta dentro del alfabeto permitido
+            if (!isInAlphabet(currentChar)) {
+                token = new Token(String.valueOf(currentChar), TokenType.INVALID_UNIDENTIFIED, this.currentLine, this.currentColumn);
+                this.foundTokens.add(token);
+                this.currentColumn++;
+                continue;
+            }
+
             switch (currentChar){
                 case ' ':
-                    System.out.println("[ANALYZER] Found space at index: " + index);
                     this.createToken(buffer);
                     buffer = "";
                     break;
                 case '\n':
-                    System.out.println("[ANALYZER] Found new line at index: " + index + "BUFFER: " + buffer);
                     this.createToken(buffer);
                     buffer = "";
                     this.currentLine++;
@@ -70,24 +76,28 @@ public class LexicalAnalyzer {
                     int stringEnd = i + 1;
                     boolean foundClosingQuote = false;
                     while (stringEnd < codeChars.length) {
-                        if (codeChars[stringEnd] == '"') {
+                        if (codeChars[stringEnd] == '\"') {
                             foundClosingQuote = true;
                             break;
                         } else if (codeChars[stringEnd] == '\'') {
                             foundClosingQuote = true;
                             break;
+                        } else {
+                            stringEnd++;
                         }
-                        stringEnd++;
                     }
 
                     if (!foundClosingQuote) {
                         // Si no se encontró el cierre de la cadena, se crea un token de error
-                        System.out.println("[ERROR] Unclosed string at index: " + i);
                         token = new Token(code.substring(i, stringEnd), TokenType.INVALID_UNIDENTIFIED, this.currentLine, this.currentColumn);
-                        // Skip the string
                     } else {
+                        // Ajustar el contador de columnas al valor correcto
+                        if(this.currentLine == 1){
+                            this.currentColumn = stringEnd + 2;
+                        } else {
+                            this.currentColumn = (stringEnd - i) + 2;
+                        }
                         token = new Token(code.substring(i, stringEnd + 1), TokenType.STRING, this.currentLine, this.currentColumn);
-                        // Se salta la cadena
                     }
                     this.foundTokens.add(token);
                     i = stringEnd;
@@ -165,7 +175,6 @@ public class LexicalAnalyzer {
                     if (i + 1 < codeChars.length && codeChars[i + 1] == '/') {
                         // Revisar de nuevo si el siguiente caracter es un /, si es así, es invalido
                         if (i + 2 < codeChars.length && codeChars[i + 2] == '/') {
-                            System.out.println("[ERROR] Invalid token at index: " + i);
                             token = new Token(code.substring(i, i + 3), TokenType.INVALID_UNIDENTIFIED, this.currentLine, this.currentColumn);
                             this.foundTokens.add(token);
                             i += 2;
@@ -252,6 +261,13 @@ public class LexicalAnalyzer {
                 case '7':
                 case '8':
                 case '9':
+                    /* Primero revisamos el buffer para ver si hay algo que no sea un número, si es el caso, continuamos el bucle
+                    porque puede ser un identificador */
+                    if (containsLettersOrUnderscores(buffer)) {
+                        buffer += currentChar;
+                        break;
+                    }
+
                     int numberEnd = i + 1;
                     boolean hasDecimalPoint = false;
                     TokenType numericConstantType;
@@ -288,7 +304,7 @@ public class LexicalAnalyzer {
 
                     token = new Token(code.substring(i, numberEnd), numericConstantType, this.currentLine, this.currentColumn);
                     this.foundTokens.add(token);
-                    i = numberEnd;
+                    i = numberEnd - 1;
                     buffer = "";
                     break;
                 default:
@@ -296,31 +312,25 @@ public class LexicalAnalyzer {
                     break;
             }
             this.currentColumn++;
-            index++;
         }
     }
 
     private void createToken(String lexeme) {
         // Si el lexema está vacío, no se crea un token
-        if (lexeme.isEmpty()) {
-            return;
-        }
+        if (lexeme.isEmpty()) return;
 
         // Verificar si el lexema es un token válido de identificador
-        /* Check if the lexeme is an identifier
-        Rules:
-        1. It must start with a letter or an underscore
-        2. It can only contain letters, numbers and underscores
-        3. It can't be a keyword
-        4. Case-sensitive
-        Using regex is not allowed
-        */
-
-        var tokenType = this.symbolsTable.get(lexeme);
-        if (tokenType == null) {
-            tokenType = TokenType.INVALID_UNIDENTIFIED;
+        if (isValidIdentifier(lexeme, this.symbolsTable)) {
+            Token token = new Token(lexeme, TokenType.IDENTIFIER, this.currentLine, this.currentColumn);
+            this.foundTokens.add(token);
+        } else {
+            // Si no es un identificador, se busca en la tabla de símbolos, si no está, es inválido
+            var tokenType = this.symbolsTable.get(lexeme);
+            if (tokenType == null) {
+                tokenType = TokenType.INVALID_UNIDENTIFIED;
+            }
+            Token token = new Token(lexeme, tokenType, this.currentLine, this.currentColumn);
+            this.foundTokens.add(token);
         }
-        Token token = new Token(lexeme, tokenType, this.currentLine, this.currentColumn);
-        this.foundTokens.add(token);
     }
 }

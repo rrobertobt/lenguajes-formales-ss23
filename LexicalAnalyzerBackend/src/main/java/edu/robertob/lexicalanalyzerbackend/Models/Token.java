@@ -19,7 +19,7 @@ public class Token {
         this.column = column;
 //        this.pattern = pattern;
 
-        System.out.println("[CREATE TOKEN] Detected token: " + lexeme + " of type: " + type + " at line: " + line + " and column: " + column);
+//        System.out.println("[CREATE TOKEN] Detected token: " + lexeme + " of type: " + type + " at line: " + line + " and column: " + column);
     }
 
     public Token() {

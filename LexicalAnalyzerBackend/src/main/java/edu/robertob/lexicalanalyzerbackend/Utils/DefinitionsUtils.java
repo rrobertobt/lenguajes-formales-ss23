@@ -2,7 +2,9 @@ package edu.robertob.lexicalanalyzerbackend.Utils;
 
 import java.util.Map;
 
+// Clase que contiene y define el alfabeto y las palabras reservadas del lenguaje
 public class DefinitionsUtils {
+    public static String alphabet = " _abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789#(){}[],:;.+-*/%<>=!\"'\n";
     public static void fillSymbolsTableAsStringType(Map<String, TokenType> map){
         // Keywords
         map.put("and", TokenType.KEYWORD);
