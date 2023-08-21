@@ -6,6 +6,8 @@ import java.util.List;
 
 import com.sun.tools.javac.Main;
 import edu.robertob.lexicalanalyzerbackend.Models.LexicalAnalyzer;
+import edu.robertob.lexicalanalyzerbackend.Models.Token;
+import edu.robertob.lexicalanalyzerbackend.Utils.GsonWrapper;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
 
@@ -14,9 +16,11 @@ public class MainServlet extends HttpServlet {
 
     LexicalAnalyzer lexicalAnalyzer;
     List<String> tokens;
+    private final GsonWrapper gsonWrapper;
     public MainServlet() {
         this.lexicalAnalyzer = new LexicalAnalyzer();
         this.tokens = new ArrayList<>();
+        this.gsonWrapper = new GsonWrapper();
     }
 
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -33,14 +37,15 @@ public class MainServlet extends HttpServlet {
 //        String code = "def class if int(int)";
         this.lexicalAnalyzer.findCodeTokens(requestBody);
         var foundTokens = this.lexicalAnalyzer.getFoundTokens();
-        PrintWriter out = response.getWriter();
-        out.println("Reading code:\n\n" + requestBody);
-        out.println("Found tokens:" + "\n");
-        for (var token : foundTokens) {
-            out.println(token.getLexeme() + " " + token.getType() + " " + token.getLine() + " " + token.getColumn());
-        }
+        this.gsonWrapper.sendAsJson(response, foundTokens);
+//        PrintWriter out = response.getWriter();
+//        out.println("Reading code:\n\n" + requestBody);
+//        out.println("Found tokens:" + "\n");
+//        for (var token : foundTokens) {
+//            out.println(token.getLexeme() + " " + token.getType() + " " + token.getLine() + " " + token.getColumn());
+//        }
 
-        response.setContentType("text/plain");
+//        response.setContentType("text/plain");
     }
 
     private String getRequestBody(HttpServletRequest request) throws IOException {
