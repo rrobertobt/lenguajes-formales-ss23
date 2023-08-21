@@ -22,9 +22,9 @@ public class LexicalAnalyzer {
 
     public void findCodeTokens(String code) {
         System.out.println("[ANALYZER] Finding tokens in code: " + code);
-        // Clearing the found tokens list
+        // Limpiando la lista de tokens encontrados
         this.foundTokens.clear();
-        // Resetting the line and column counters
+        // Reseteando el contador de líneas y columnas
         this.currentLine = 1;
         this.currentColumn = 1;
         int index = 0;
@@ -48,53 +48,28 @@ public class LexicalAnalyzer {
                     this.currentColumn = 0;
                     break;
                 case '#':
-                    // This is the start of a comment
+                    // Se detecta el inicio de un comentario
                     int commentEnd = i + 1;
                     while (commentEnd < codeChars.length && codeChars[commentEnd] != '\n') {
                         commentEnd++;
                     }
-                    // Create a token for the comment
                     Token token = new Token(code.substring(i, commentEnd), TokenType.COMMENT, this.currentLine, this.currentColumn);
                     this.foundTokens.add(token);
                     this.currentLine++;
                     this.currentColumn = 0;
-                    // Skip the comment and continue
+                    // Saltar el comentario y resetear el buffer
                     i = commentEnd;
-                    // Reset the buffer
                     buffer = "";
                     break;
                 case '\"':
+                case '\'':
                     int stringEnd = i + 1;
                     boolean foundClosingQuote = false;
                     while (stringEnd < codeChars.length) {
                         if (codeChars[stringEnd] == '"') {
                             foundClosingQuote = true;
                             break;
-                        }
-                        stringEnd++;
-                    }
-
-                    if (!foundClosingQuote) {
-                        // The string does not have a closing quote
-                        System.out.println("[ERROR] Unclosed string at index: " + i);
-                        token = new Token(code.substring(i, stringEnd), TokenType.INVALID_UNIDENTIFIED, this.currentLine, this.currentColumn);
-                        this.foundTokens.add(token);
-                        // Skip the string
-                        i = stringEnd;
-                    } else {
-                        // Create a token for the string
-                        token = new Token(code.substring(i, stringEnd + 1), TokenType.STRING, this.currentLine, this.currentColumn);
-                        this.foundTokens.add(token);
-                        // Skip the string
-                        i = stringEnd;
-                    }
-                    buffer = "";
-                    break;
-                case '\'':
-                    stringEnd = i + 1;
-                    foundClosingQuote = false;
-                    while (stringEnd < codeChars.length) {
-                        if (codeChars[stringEnd] == '\'') {
+                        } else if (codeChars[stringEnd] == '\'') {
                             foundClosingQuote = true;
                             break;
                         }
@@ -102,21 +77,21 @@ public class LexicalAnalyzer {
                     }
 
                     if (!foundClosingQuote) {
-                        // The string does not have a closing quote
+                        // Si no se encontró el cierre de la cadena, se crea un token de error
                         System.out.println("[ERROR] Unclosed string at index: " + i);
                         token = new Token(code.substring(i, stringEnd), TokenType.INVALID_UNIDENTIFIED, this.currentLine, this.currentColumn);
                         this.foundTokens.add(token);
                         // Skip the string
                         i = stringEnd;
                     } else {
-                        // Create a token for the string
                         token = new Token(code.substring(i, stringEnd + 1), TokenType.STRING, this.currentLine, this.currentColumn);
                         this.foundTokens.add(token);
-                        // Skip the string
+                        // Se salta la cadena
                         i = stringEnd;
                     }
                     buffer = "";
                     break;
+                // Delimitadores y signos de puntuación
                 case '(':
                     this.createToken(buffer);
                     this.createToken("(");
@@ -167,7 +142,7 @@ public class LexicalAnalyzer {
                     this.createToken(";");
                     buffer = "";
                     break;
-                    // Operators
+                    // Operadores
                 case '+':
                     this.createToken(buffer);
                     this.createToken("+");
@@ -184,9 +159,9 @@ public class LexicalAnalyzer {
                     buffer = "";
                     break;
                 case '/':
-                    // Check if the next character is also a /, if so, it counts as division too
+                    // Revisa si el siguiente caracter es un /, si es así, cuenta como división también
                     if (i + 1 < codeChars.length && codeChars[i + 1] == '/') {
-                        // Check again if the next character is also a /, if so, it is invalid
+                        // Revisar de nuevo si el siguiente caracter es un /, si es así, es invalido
                         if (i + 2 < codeChars.length && codeChars[i + 2] == '/') {
                             System.out.println("[ERROR] Invalid token at index: " + i);
                             token = new Token(code.substring(i, i + 3), TokenType.INVALID_UNIDENTIFIED, this.currentLine, this.currentColumn);
@@ -200,20 +175,19 @@ public class LexicalAnalyzer {
                             buffer = "";
                             i++;
                         }
-                        break;
                     } else {
                         this.createToken(buffer);
                         this.createToken("/");
                         buffer = "";
-                        break;
                     }
+                    break;
                 case '%':
                     this.createToken(buffer);
                     this.createToken("%");
                     buffer = "";
                     break;
                 case '<':
-                    // Check if the next character is a =, if so, it counts as comparison but less than or equal to
+                    // Revisa si el siguiente caracter es un =, si es así, cuenta como comparación pero menor o igual que
                     if (i + 1 < codeChars.length && codeChars[i + 1] == '=') {
                         this.createToken(buffer);
                         this.createToken("<=");
@@ -227,7 +201,7 @@ public class LexicalAnalyzer {
                         break;
                     }
                 case '>':
-                    // Check if the next character is a =, if so, it counts as comparison but greater than or equal to
+                    // Revisa si el siguiente caracter es un =, si es así, cuenta como comparación pero mayor o igual que
                     if (i + 1 < codeChars.length && codeChars[i + 1] == '=') {
                         this.createToken(buffer);
                         this.createToken(">=");
@@ -241,7 +215,7 @@ public class LexicalAnalyzer {
                         break;
                     }
                 case '=':
-                    // Check if the next character is also a =, if so, it counts as comparison instead of assignment
+                    // Revisa si el siguiente caracter es un =, si es así, cuenta como comparación en vez de asignación
                     if (i + 1 < codeChars.length && codeChars[i + 1] == '=') {
                         this.createToken(buffer);
                         this.createToken("==");
@@ -255,7 +229,7 @@ public class LexicalAnalyzer {
                         break;
                     }
                 case '!':
-                    // Check if the next character is also a =, if so, it counts as comparison instead of assignment
+                    // Revisa si el siguiente caracter es un =, si es así, cuenta como comparación, si no, es invalido
                     if (i + 1 < codeChars.length && codeChars[i + 1] == '=') {
                         this.createToken(buffer);
                         this.createToken("!=");
@@ -264,7 +238,6 @@ public class LexicalAnalyzer {
                         break;
                     } else {
                         token = new Token("!", TokenType.INVALID_UNIDENTIFIED, this.currentLine, this.currentColumn);
-                        // Invalid_unidentified token
                         this.foundTokens.add(token);
                         buffer = "";
                         break;
@@ -280,14 +253,41 @@ public class LexicalAnalyzer {
                 case '8':
                 case '9':
                     int numberEnd = i + 1;
-                    while (numberEnd < codeChars.length && (codeChars[numberEnd] >= '0' && codeChars[numberEnd] <= '9')) {
-                        numberEnd++;
+                    boolean hasDecimalPoint = false;
+                    TokenType numericConstantType;
+
+                    // Se encuantra el final del número
+                    while (numberEnd < codeChars.length) {
+                        char currentNumChar = codeChars[numberEnd];
+                        if (currentNumChar >= '0' && currentNumChar <= '9') {
+                            // Si es un dígito, sigue siendo un número
+                            numberEnd++;
+                        } else if (currentNumChar == '.' && !hasDecimalPoint) {
+                            // Se encuentra un punto decimal, si no se ha encontrado uno antes, sigue siendo un número
+                            hasDecimalPoint = true;
+                            numberEnd++;
+                        } else {
+                            // Si no es un dígito o tampoco un punto decimal valido, se termina el número
+                            break;
+                        }
                     }
 
-                    // Create a token for the number
-                    token = new Token(code.substring(i, numberEnd), TokenType.NUMERIC_CONSTANT, this.currentLine, this.currentColumn);
+                    // Revisa si el número tiene más de un punto decimal para definir el tipo de token y crearlo
+                    boolean hasMoreOneDot = (numberEnd < codeChars.length) &&
+                            codeChars[numberEnd - 1] == '.' &&
+                            codeChars[numberEnd] == '.';
+
+
+                    if (hasMoreOneDot) {
+                        numericConstantType = TokenType.INVALID_UNIDENTIFIED;
+                    } else if (hasDecimalPoint) {
+                        numericConstantType = TokenType.NUMERIC_CONSTANT_DECIMAL;
+                    } else {
+                        numericConstantType = TokenType.NUMERIC_CONSTANT_WHOLE;
+                    }
+
+                    token = new Token(code.substring(i, numberEnd), numericConstantType, this.currentLine, this.currentColumn);
                     this.foundTokens.add(token);
-                    // Skip the number
                     i = numberEnd;
                     buffer = "";
                     break;
@@ -387,5 +387,4 @@ public class LexicalAnalyzer {
         this.symbolsTable.put(";", TokenType.PUNCTUATION_SEMICOLON);
         this.symbolsTable.put(".", TokenType.PUNCTUATION_DOT);
     }
-
 }
