@@ -6,11 +6,11 @@
   <section class="main-section">
     <TextEditor
       :loading="loading"
+      :tokens="tokens"
       :tokens-length="tokensLength"
       @update-code="code = $event"
       @analyze-code="analyze"
       @clear-tokens="tokens = []"
-      @clear-tokens-snckbar="onClearTokensSnackbar($event)"
     />
     <div class="table-area">
       <TokensPanels :tokens="tokens" :loading="loading" />
@@ -32,6 +32,7 @@ export default {
   },
   data() {
     return {
+      code: '',
       loading: false,
       tokens: [],
       snackbarInfo: {
@@ -58,7 +59,6 @@ export default {
       })
         .then((response) => response.json())
         .then((data) => {
-          console.log(data)
           this.tokens = data
         })
         .catch((error) => {
@@ -73,10 +73,6 @@ export default {
         .finally(() => {
           this.loading = false
         })
-    },
-    onClearTokensSnackbar($event) {
-      this.snackbarInfo = $event
-      this.$refs.snackbar.show()
     }
   }
 }
