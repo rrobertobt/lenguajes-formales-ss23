@@ -1,8 +1,11 @@
 <template>
-  <header>
-    <h1>Analizador léxico <code>parser-py</code> - Lenguajes Formales SS 2023</h1>
+  <header class="header">
+    <h1 class="title">Analizador léxico <code>parser-py</code> - Lenguajes Formales SS 2023</h1>
+    <ConfigurationMenu
+      @update-show-new-lines="showNewLines = $event"
+      @update-show-spaces="showSpaces = $event"
+    />
   </header>
-  <v-divider></v-divider>
   <section class="main-section">
     <TextEditor
       :loading="loading"
@@ -13,7 +16,12 @@
       @clear-tokens="tokens = []"
     />
     <div class="table-area">
-      <TokensPanels :tokens="tokens" :loading="loading" />
+      <TokensPanels
+        :tokens="tokens"
+        :loading="loading"
+        :show-spaces="showSpaces"
+        :show-new-lines="showNewLines"
+      />
     </div>
   </section>
   <GeneralSnackbar ref="snackbar" :info="snackbarInfo" />
@@ -24,14 +32,19 @@ import { API_BASE_URL } from '../utils/constants.js'
 import GeneralSnackbar from '@/components/GeneralSnackbar.vue'
 import TextEditor from '../components/TextEditor.vue'
 import TokensPanels from '@/components/TokensPanels.vue'
+import ConfigurationMenu from '@/components/ConfigurationMenu.vue'
 export default {
   components: {
     TextEditor,
     GeneralSnackbar,
-    TokensPanels
+    TokensPanels,
+    ConfigurationMenu
   },
   data() {
     return {
+      menu: false,
+      showSpaces: true,
+      showNewLines: true,
       code: '',
       loading: false,
       tokens: [],
@@ -95,6 +108,13 @@ code {
   width: 50%;
   max-height: 800px;
 }
+.header {
+  display: grid;
+  grid-template-columns: 1fr auto; /* One column for title, one for icon */
+  align-items: center;
+  justify-content: space-between;
+}
+
 header h1 {
   text-align: center;
 }

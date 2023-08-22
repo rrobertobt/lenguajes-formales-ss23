@@ -6,7 +6,7 @@
         <h3><strong>Tokens validos encontrados:</strong></h3>
       </v-expansion-panel-title>
       <v-expansion-panel-text class="mx-n6">
-        <TokensTable :tokens="validTokens" :loading="loading" />
+        <TokensTable :tokens="filteredData" :loading="loading" />
       </v-expansion-panel-text>
     </v-expansion-panel>
     <v-expansion-panel value="invalid">
@@ -39,14 +39,42 @@ export default {
     loading: {
       type: Boolean,
       default: false
+    },
+    showSpaces: {
+      type: Boolean,
+      default: true
+    },
+    showNewLines: {
+      type: Boolean,
+      default: true
     }
   },
   data() {
     return {
-      panel: [0]
+      panel: ['valid']
     }
   },
   computed: {
+    filteredData() {
+      const newTokens = this.tokens.filter((token) => token.type !== 'INVALID_UNIDENTIFIED')
+      return newTokens.filter((item) => {
+        if (this.showSpaces && this.showNewLines) {
+          console.log('No filter')
+          return true
+        } else if (!this.showSpaces && this.showNewLines) {
+          console.log('No spaces')
+          return item.type !== 'SPACE'
+        } else if (this.showSpaces && !this.showNewLines) {
+          console.log('No new lines')
+          return item.type !== 'NEW_LINE'
+        } else if (!this.showSpaces && !this.showNewLines) {
+          console.log('No spaces and no new lines')
+          return item.type !== 'SPACE' && item.type !== 'NEW_LINE'
+        } else {
+          return true
+        }
+      })
+    },
     validTokens() {
       return this.tokens.filter((token) => token.type !== 'INVALID_UNIDENTIFIED')
     },
