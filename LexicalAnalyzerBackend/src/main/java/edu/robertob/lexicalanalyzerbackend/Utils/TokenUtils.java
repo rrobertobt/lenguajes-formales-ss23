@@ -50,4 +50,8 @@ public class TokenUtils {
     public static boolean isInAlphabet(char c) {
         return DefinitionsUtils.alphabet.contains(String.valueOf(c));
     }
+
+    public static boolean isLogicOperator(String lexeme) {
+        return lexeme.equals("and") || lexeme.equals("or") || lexeme.equals("not");
+    }
 }

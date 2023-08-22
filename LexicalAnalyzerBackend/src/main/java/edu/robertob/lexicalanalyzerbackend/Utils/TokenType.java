@@ -26,5 +26,5 @@ public enum TokenType {
     LOGIC_TRUE,
     LOGIC_FALSE,
     INVALID_UNIDENTIFIED,
-    EOF
+    NEW_LINE, SPACE, EOF
 }
