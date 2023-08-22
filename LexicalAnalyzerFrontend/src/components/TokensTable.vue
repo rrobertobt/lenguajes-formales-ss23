@@ -14,7 +14,7 @@
       { value: -1, title: '$vuetify.dataFooter.itemsPerPageAll' }
     ]"
     density="comfortable"
-    height="350px"
+    height="400px"
     width="100px"
   >
     <template #item.lexeme="{ item }">

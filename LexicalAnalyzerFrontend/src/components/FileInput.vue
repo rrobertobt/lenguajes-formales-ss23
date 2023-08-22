@@ -2,9 +2,9 @@
   <div class="text-center">
     <v-btn size="large">
       <v-icon class="mx-2" size="large"> mdi-file-document-arrow-right-outline </v-icon>
-      <strong>Leer desde archivo</strong>
+      <strong>Leer archivo</strong>
 
-      <v-dialog v-model="dialog" activator="parent" width="24vw">
+      <v-dialog v-model="dialog" activator="parent" width="32vw">
         <v-card class="dialog-card rounded-xl">
           <v-card-title class="dialog-title">
             <h3>Leer desde archivo</h3>
@@ -12,7 +12,9 @@
               <v-icon>mdi-close</v-icon>
             </v-btn>
           </v-card-title>
-
+          <p style="font-size: 0.9rem; color: gray; width: 90%; text-align: left" class="ml-4 mb-4">
+            Aquí puedes seleccionar un archivo de texto plano para leerlo y analizarlo
+          </p>
           <v-card-text>
             <div>
               <v-file-input
@@ -35,7 +37,7 @@
               <p v-if="error" class="my-4">
                 <span>
                   <v-icon color="red" class="mr-2"> mdi-alert-circle </v-icon>
-                  <strong>Ocurrió un error leyendo el archivo:</strong></span
+                  <strong>Ocurrió un error al leer el archivo:</strong></span
                 >
                 <br />
                 <span style="color: red">{{ error }}</span>
@@ -44,8 +46,13 @@
           </v-card-text>
 
           <v-card-actions class="justify-end">
-            <v-btn variant="tonal" color="blue" :disabled="disableAcceptButton" @click="submitFile">
-              Usar este archivo
+            <v-btn
+              variant="tonal"
+              color="deep-purple-accent-3"
+              :disabled="disableAcceptButton"
+              @click="submitFile"
+            >
+              Usar archivo
             </v-btn>
           </v-card-actions>
         </v-card>
@@ -136,7 +143,6 @@ export default {
 </script>
 <style scoped>
 .dialog-card {
-  max-width: 500px;
   padding: 1.3rem;
 }
 

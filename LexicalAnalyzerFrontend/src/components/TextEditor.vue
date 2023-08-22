@@ -3,9 +3,10 @@
     <h4 class="mb-n2">Escribe el codigo aqui:</h4>
     <span>
       <v-chip
-        class="mr-3 mb-1"
-        color="red"
-        prepend-icon="mdi-notification-clear-all"
+        class="mr-3"
+        color="pink-accent-3"
+        prepend-icon="mdi-backspace-outline"
+        variant="outlined"
         @click="clearCode"
       >
         Limpiar
@@ -26,24 +27,39 @@
         @input="handleInput"
         @keydown="handleKeyDown"
         @click="calculateCursorPosition"
+        @scroll="syncScrollCodeBlock"
       ></textarea>
-      <pre id="code-block" ref="codeBlock" class="code-display"
-        >{{ code }}
-      </pre>
+      <ColoredOutput :scroll-top="scrollTop" :tokens="tokens" :code="code" />
     </div>
     <div class="code-actions">
       <FileInput @file-read="readTextFromFile($event)" />
-      <v-btn size="large" :loading="loading" color="amber-darken-2" @click="analyzeCode">
-        <v-icon class="mx-2" size="large"> mdi-cog-play-outline </v-icon>
-        <strong>Analizar</strong>
-      </v-btn>
+      <v-tooltip
+        text="Esta aplicación analiza el código mientras escribes, pero en caso no funcione correctamente, puedes usar este botón"
+        location="top"
+        max-width="300"
+        open-delay="600"
+      >
+        <template #activator="{ props }">
+          <v-btn
+            v-bind="props"
+            size="large"
+            :loading="loading"
+            color="deep-purple-accent-3"
+            @click="analyzeCode"
+          >
+            <v-icon class="mx-2" size="large"> mdi-cog-play-outline </v-icon>
+            <strong>Analizar</strong>
+          </v-btn>
+        </template>
+      </v-tooltip>
     </div>
   </div>
 </template>
 <script>
 import FileInput from '@/components/FileInput.vue'
+import ColoredOutput from '@/components/ColoredOutput.vue'
 export default {
-  components: { FileInput },
+  components: { FileInput, ColoredOutput },
   props: {
     loading: {
       type: Boolean,
@@ -52,19 +68,23 @@ export default {
     tokensLength: {
       type: Number,
       default: 0
+    },
+    tokens: {
+      type: Array,
+      default: () => []
     }
   },
   emits: {
     analyzeCode: null,
     updateCode: null,
-    clearTokens: null,
-    clearTokensSnckbar: null
+    clearTokens: null
   },
   data() {
     return {
       code: '',
       line: 1,
-      column: 1
+      column: 1,
+      scrollTop: 0
     }
   },
   watch: {
@@ -75,48 +95,25 @@ export default {
       }
     }
   },
-  mounted() {
-    // Sincronizar el scroll del editor con el scroll del code-block
-    const editor = this.$refs.editor
-    const codeBlock = this.$refs.codeBlock
-
-    editor.addEventListener('scroll', function () {
-      // Para scroll vertical
-      const editorScrollTop = editor.scrollTop
-      codeBlock.scrollTop = editorScrollTop
-
-      // Para scroll horizontal
-      // const editorScrollLeft = editor.scrollLeft
-      // codeBlock.scrollLeft = editorScrollLeft
-    })
-  },
-  unmounted() {
-    // Eliminar el event-listener del scroll
-    const editor = document.getElementById('editor')
-    editor.removeEventListener('scroll', function () {})
-  },
   methods: {
+    syncScrollCodeBlock(event) {
+      this.scrollTop = event.target.scrollTop
+    },
     clearCode() {
       this.code = ''
-      this.handleInput()
+      this.$emit('clearTokens')
     },
     readTextFromFile(content) {
       this.code = content
-      this.handleInput()
+      this.$emit('updateCode', content)
+      this.analyzeCode()
     },
     analyzeCode() {
-      this.$emit('analyzeCode', this.code)
+      this.$emit('analyzeCode')
     },
     handleInput() {
       this.calculateCursorPosition()
-      if (this.tokensLength > 0) {
-        this.$emit('clearTokensSnckbar', {
-          text: 'Se ha modificado el código, se han eliminado los tokens',
-          details: 'Para ver los tokens nuevos, analiza el código nuevamente',
-          type: 'warn'
-        })
-      }
-      this.$emit('clearTokens')
+      this.analyzeCode()
     },
     handleKeyDown() {
       // Se "retarda" la ejecución para que el DOM se actualice correctamente y no sea retrasado el cambio de cursor
@@ -162,7 +159,6 @@ export default {
   height: 650px;
   border-radius: 5px;
   border: 1px solid #ccc;
-  /* overflow: hidden; */
 }
 .code-input {
   border-radius: 5px;
@@ -180,14 +176,14 @@ export default {
   resize: none;
   color: transparent;
   white-space: pre-wrap;
-  outline: 2px solid transparent;
+  outline: 1.5px solid transparent;
   transition:
     outline 0.2s ease-in-out,
     box-shadow 0.2s ease-in-out;
 }
 
 .code-input:focus {
-  outline: 2px solid #bebebe;
+  outline: 1.5px solid #b39ddb;
   box-shadow:
     0px 4px 6px -1px rgba(0, 0, 0, 0.1),
     0px 2px 4px -1px rgba(0, 0, 0, 0.06);
@@ -198,6 +194,7 @@ export default {
   font-family: 'JetBrains Mono', monospace;
   position: absolute;
   top: 0;
+  color: #000;
   left: 0;
   width: 100%;
   height: 100%;
@@ -205,15 +202,4 @@ export default {
   background-color: #f4f4f4;
   overflow: auto;
 }
-
-/* .code-input,
-.code-display {
-  padding: 1rem;
-  position: absolute;
-  top: 0;
-  left: 0;
-  border-radius: 5px;
-  font-family: 'JetBrains Mono', monospace;
-  font-weight: 600;
-} */
 </style>
