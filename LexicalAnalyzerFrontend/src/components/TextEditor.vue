@@ -16,23 +16,23 @@
         <v-icon class="mx-3"> mdi-form-textbox </v-icon>
       </span>
     </span>
-    <div class="code-area elevation-3">
+    <div class="code-area">
       <textarea
         id="editor"
         ref="editor"
         v-model="code"
         class="code-input"
-        name=""
         spellcheck="false"
         @input="handleInput"
         @keydown="handleKeyDown"
         @click="calculateCursorPosition"
       ></textarea>
-      <pre id="code-block" class="code-display"
+      <pre id="code-block" ref="codeBlock" class="code-display"
         >{{ code }}
       </pre>
     </div>
     <div class="code-actions">
+      <FileInput @file-read="readTextFromFile($event)" />
       <v-btn size="large" :loading="loading" color="amber-darken-2" @click="analyzeCode">
         <v-icon class="mx-2" size="large"> mdi-cog-play-outline </v-icon>
         <strong>Analizar</strong>
@@ -41,7 +41,9 @@
   </div>
 </template>
 <script>
+import FileInput from './FileInput.vue'
 export default {
+  components: { FileInput },
   props: {
     loading: {
       type: Boolean,
@@ -74,16 +76,17 @@ export default {
   },
   mounted() {
     // Sincronizar el scroll del editor con el scroll del code-block
-    const editor = document.getElementById('editor')
-    const codeBlock = document.getElementById('code-block')
+    const editor = this.$refs.editor
+    const codeBlock = this.$refs.codeBlock
 
     editor.addEventListener('scroll', function () {
       // Para scroll vertical
       const editorScrollTop = editor.scrollTop
       codeBlock.scrollTop = editorScrollTop
+
       // Para scroll horizontal
-      const editorScrollLeft = editor.scrollLeft
-      codeBlock.scrollLeft = editorScrollLeft
+      // const editorScrollLeft = editor.scrollLeft
+      // codeBlock.scrollLeft = editorScrollLeft
     })
   },
   unmounted() {
@@ -94,6 +97,10 @@ export default {
   methods: {
     clearCode() {
       this.code = ''
+      this.handleInput()
+    },
+    readTextFromFile(content) {
+      this.code = content
       this.handleInput()
     },
     analyzeCode() {
@@ -149,28 +156,52 @@ export default {
   width: 100%;
   height: 650px;
   border-radius: 5px;
+  border: 1px solid #ccc;
+  /* overflow: hidden; */
+}
+.code-input {
+  border-radius: 5px;
+  padding: 10px;
+  font-family: 'JetBrains Mono', monospace;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: transparent;
+  caret-color: black;
+  z-index: 1;
+  border: none;
+  resize: none;
+  color: transparent;
+  white-space: pre-wrap;
+  outline: 2px solid transparent;
+  transition:
+    outline 0.2s ease-in-out,
+    box-shadow 0.2s ease-in-out;
+}
+
+.code-input:focus {
+  outline: 2px solid #bebebe;
+  box-shadow:
+    0px 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0px 2px 4px -1px rgba(0, 0, 0, 0.06);
 }
 .code-display {
-  z-index: 0;
-  height: 100%;
+  border-radius: 5px;
+  padding: 10px;
+  font-family: 'JetBrains Mono', monospace;
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
-  background-color: #2c2525;
-  color: white;
+  height: 100%;
   white-space: pre-wrap;
+  background-color: #f4f4f4;
+  overflow: auto;
 }
 
-.code-input {
-  height: 100%;
-  width: 100%;
-  z-index: 1;
-  color: transparent;
-  caret-color: white;
-  border: none;
-  outline: none;
-  resize: none;
-}
-
-.code-input,
+/* .code-input,
 .code-display {
   padding: 1rem;
   position: absolute;
@@ -179,5 +210,5 @@ export default {
   border-radius: 5px;
   font-family: 'JetBrains Mono', monospace;
   font-weight: 600;
-}
+} */
 </style>
