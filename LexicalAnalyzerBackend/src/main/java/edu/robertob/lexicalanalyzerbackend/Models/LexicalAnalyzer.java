@@ -38,14 +38,6 @@ public class LexicalAnalyzer {
         char [] codeChars = code.toCharArray();
         for (int i = 0; i < codeChars.length; i++) {
             char currentChar = codeChars[i];
-            // Primero verificamos si el caracter actual esta dentro del alfabeto permitido
-            if (!isInAlphabet(currentChar)) {
-                token = new Token(String.valueOf(currentChar), TokenType.INVALID_UNIDENTIFIED, this.currentLine, this.currentColumn);
-                this.foundTokens.add(token);
-                this.currentColumn++;
-                continue;
-            }
-
             switch (currentChar){
                 case ' ':
                     this.createToken(buffer);
@@ -321,6 +313,12 @@ public class LexicalAnalyzer {
 
         // Verificar si el lexema es un token válido de identificador
         if (isValidIdentifier(lexeme, this.symbolsTable)) {
+            // Tambien verificar si contiene letras del alfabeto permitido, si no, es invalido
+            if (!isValidLexeme(lexeme)) {
+                Token token = new Token(lexeme, TokenType.INVALID_UNIDENTIFIED, this.currentLine, this.currentColumn);
+                this.foundTokens.add(token);
+                return;
+            }
             Token token = new Token(lexeme, TokenType.IDENTIFIER, this.currentLine, this.currentColumn);
             this.foundTokens.add(token);
         } else {
