@@ -10,21 +10,35 @@
       @update-code="code = $event"
       @analyze-code="analyze"
       @clear-tokens="tokens = []"
+      @clear-tokens-snckbar="onClearTokensSnackbar($event)"
     />
-    <div class="table-area">Aqui deberia ir una tabla con los tokens</div>
+    <div class="table-area">
+      <TokensPanels :tokens="tokens" :loading="loading" />
+    </div>
   </section>
+  <GeneralSnackbar ref="snackbar" :info="snackbarInfo" />
 </template>
 
 <script>
+import { API_BASE_URL } from '../utils/constants.js'
+import GeneralSnackbar from '@/components/GeneralSnackbar.vue'
 import TextEditor from '../components/TextEditor.vue'
+import TokensPanels from '@/components/TokensPanels.vue'
 export default {
   components: {
-    TextEditor
+    TextEditor,
+    GeneralSnackbar,
+    TokensPanels
   },
   data() {
     return {
       loading: false,
-      tokens: []
+      tokens: [],
+      snackbarInfo: {
+        text: '',
+        type: '',
+        details: ''
+      }
     }
   },
   computed: {
@@ -33,7 +47,37 @@ export default {
     }
   },
   methods: {
-    analyze() {}
+    analyze() {
+      this.loading = true
+      fetch(`${API_BASE_URL}/analyze`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'text/plain'
+        },
+        body: this.code
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data)
+          this.tokens = data
+        })
+        .catch((error) => {
+          console.error(error)
+          this.snackbarInfo = {
+            text: 'Ocurrió un error al analizar el código, puede que haya un problema con el servidor',
+            details: error.message,
+            type: 'error'
+          }
+          this.$refs.snackbar.show()
+        })
+        .finally(() => {
+          this.loading = false
+        })
+    },
+    onClearTokensSnackbar($event) {
+      this.snackbarInfo = $event
+      this.$refs.snackbar.show()
+    }
   }
 }
 </script>

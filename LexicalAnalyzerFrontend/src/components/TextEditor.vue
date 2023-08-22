@@ -41,7 +41,7 @@
   </div>
 </template>
 <script>
-import FileInput from './FileInput.vue'
+import FileInput from '@/components/FileInput.vue'
 export default {
   components: { FileInput },
   props: {
@@ -57,7 +57,8 @@ export default {
   emits: {
     analyzeCode: null,
     updateCode: null,
-    clearTokens: null
+    clearTokens: null,
+    clearTokensSnckbar: null
   },
   data() {
     return {
@@ -109,7 +110,11 @@ export default {
     handleInput() {
       this.calculateCursorPosition()
       if (this.tokensLength > 0) {
-        // TODO: notificar al usuario que se detectó un cambio en el código y se limpiará la tabla
+        this.$emit('clearTokensSnckbar', {
+          text: 'Se ha modificado el código, se han eliminado los tokens',
+          details: 'Para ver los tokens nuevos, analiza el código nuevamente',
+          type: 'warn'
+        })
       }
       this.$emit('clearTokens')
     },
