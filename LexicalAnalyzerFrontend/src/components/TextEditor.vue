@@ -23,18 +23,14 @@
         v-model="code"
         class="code-input"
         name=""
-        cols="30"
-        rows="10"
         spellcheck="false"
         @input="handleInput"
         @keydown="handleKeyDown"
         @click="calculateCursorPosition"
       ></textarea>
-
       <pre id="code-block" class="code-display"
         >{{ code }}
-        </pre
-      >
+      </pre>
     </div>
     <div class="code-actions">
       <v-btn size="large" :loading="loading" color="amber-darken-2" @click="analyzeCode">
@@ -131,6 +127,15 @@ export default {
   font-weight: bold;
 }
 
+.code-container {
+  width: 60%;
+  height: 800px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
 .code-actions {
   display: flex;
   flex-direction: row;
@@ -145,48 +150,32 @@ export default {
   height: 650px;
   border-radius: 5px;
 }
-
-.code-container {
-  width: 60%;
-  height: 800px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 1.1rem;
-}
-
 .code-display {
-  padding: 1rem;
   z-index: 0;
+  height: 100%;
   width: 100%;
-  background-color: #1e1e1e;
+  background-color: #2c2525;
   color: white;
-  overflow: auto;
+  white-space: pre-wrap;
 }
 
 .code-input {
+  height: 100%;
+  width: 100%;
   z-index: 1;
   color: transparent;
   caret-color: white;
-  width: 100%;
-  height: 100%;
   border: none;
   outline: none;
   resize: none;
-  padding: 1rem;
-  /* border-radius: 2rem; */
-  border: 1px solid #000000;
 }
 
 .code-input,
 .code-display {
-  width: 100%;
-  height: 100%;
+  padding: 1rem;
   position: absolute;
   top: 0;
   left: 0;
-  white-space: pre-wrap;
   border-radius: 5px;
   font-family: 'JetBrains Mono', monospace;
   font-weight: 600;
