@@ -24,28 +24,10 @@ public class MainServlet extends HttpServlet {
     }
 
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        // Set response content type to plain text
-        // Testing the lexical analyzer with fixed code
-//        String code = "def main():\n" +
-//                "    print(\"Hello world\")\n" +
-//                "    return 0\n" +
-//                "\n" +
-//                "if __name__ == \"__main__\":\n" +
-//                "    main()";
-        // Getting the entire code from the request body
         String requestBody = getRequestBody(request);
-//        String code = "def class if int(int)";
         this.lexicalAnalyzer.findCodeTokens(requestBody);
         var foundTokens = this.lexicalAnalyzer.getFoundTokens();
         this.gsonWrapper.sendAsJson(response, foundTokens);
-//        PrintWriter out = response.getWriter();
-//        out.println("Reading code:\n\n" + requestBody);
-//        out.println("Found tokens:" + "\n");
-//        for (var token : foundTokens) {
-//            out.println(token.getLexeme() + " " + token.getType() + " " + token.getLine() + " " + token.getColumn());
-//        }
-
-//        response.setContentType("text/plain");
     }
 
     private String getRequestBody(HttpServletRequest request) throws IOException {
