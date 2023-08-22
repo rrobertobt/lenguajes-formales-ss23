@@ -22,7 +22,6 @@ public class LexicalAnalyzer {
         this.symbolsTable = new HashMap<>();
         this.foundTokens = new ArrayList<>();
         DefinitionsUtils.fillSymbolsTableAsStringType(this.symbolsTable);
-//        fillSymbolsTable();
     }
 
     public void findCodeTokens(String code) {
@@ -42,12 +41,16 @@ public class LexicalAnalyzer {
                 case ' ':
                     this.createToken(buffer);
                     buffer = "";
+                    token = new Token(" ", TokenType.SPACE, this.currentLine, this.currentColumn);
+                    this.foundTokens.add(token);
                     break;
                 case '\n':
                     this.createToken(buffer);
                     buffer = "";
                     this.currentLine++;
                     this.currentColumn = 0;
+                    token = new Token("\n", TokenType.NEW_LINE, this.currentLine - 1, this.currentColumn);
+                    this.foundTokens.add(token);
                     break;
                 case '#':
                     // Se detecta el inicio de un comentario
@@ -57,10 +60,10 @@ public class LexicalAnalyzer {
                     }
                     token = new Token(code.substring(i, commentEnd), TokenType.COMMENT, this.currentLine, this.currentColumn);
                     this.foundTokens.add(token);
-                    this.currentLine++;
+//                    this.currentLine++;
                     this.currentColumn = 0;
                     // Saltar el comentario y resetear el buffer
-                    i = commentEnd;
+                    i = commentEnd - 1;
                     buffer = "";
                     break;
                 case '\"':
@@ -285,7 +288,6 @@ public class LexicalAnalyzer {
                             codeChars[numberEnd - 1] == '.' &&
                             codeChars[numberEnd] == '.';
 
-
                     if (hasMoreOneDot) {
                         numericConstantType = TokenType.INVALID_UNIDENTIFIED;
                     } else if (hasDecimalPoint) {
@@ -310,25 +312,26 @@ public class LexicalAnalyzer {
     private void createToken(String lexeme) {
         // Si el lexema está vacío, no se crea un token
         if (lexeme.isEmpty()) return;
-
         // Verificar si el lexema es un token válido de identificador
         if (isValidIdentifier(lexeme, this.symbolsTable)) {
             // Tambien verificar si contiene letras del alfabeto permitido, si no, es invalido
             if (!isValidLexeme(lexeme)) {
-                Token token = new Token(lexeme, TokenType.INVALID_UNIDENTIFIED, this.currentLine, this.currentColumn);
-                this.foundTokens.add(token);
+                this.foundTokens.add(new Token(lexeme, TokenType.INVALID_UNIDENTIFIED, this.currentLine, this.currentColumn));
                 return;
             }
-            Token token = new Token(lexeme, TokenType.IDENTIFIER, this.currentLine, this.currentColumn);
-            this.foundTokens.add(token);
+            this.foundTokens.add(new Token(lexeme, TokenType.IDENTIFIER, this.currentLine, this.currentColumn));
         } else {
             // Si no es un identificador, se busca en la tabla de símbolos, si no está, es inválido
+            // Pero también debemos verificar si es un operador logico (and, or, not)
+            if (isLogicOperator(lexeme)) {
+                this.foundTokens.add(new Token(lexeme, TokenType.OPERATOR_LOGIC, this.currentLine, this.currentColumn));
+                return;
+            }
             var tokenType = this.symbolsTable.get(lexeme);
             if (tokenType == null) {
                 tokenType = TokenType.INVALID_UNIDENTIFIED;
             }
-            Token token = new Token(lexeme, tokenType, this.currentLine, this.currentColumn);
-            this.foundTokens.add(token);
+            this.foundTokens.add(new Token(lexeme, tokenType, this.currentLine, this.currentColumn));
         }
     }
 }

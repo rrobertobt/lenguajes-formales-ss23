@@ -12,6 +12,7 @@ public class DefinitionsUtils {
         map.put("assert", TokenType.KEYWORD);
         map.put("break", TokenType.KEYWORD);
         map.put("class", TokenType.KEYWORD);
+        map.put("catch", TokenType.KEYWORD);
         map.put("continue", TokenType.KEYWORD);
         map.put("def", TokenType.KEYWORD);
         map.put("del", TokenType.KEYWORD);
