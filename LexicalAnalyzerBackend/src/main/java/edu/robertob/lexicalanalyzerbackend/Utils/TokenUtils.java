@@ -37,7 +37,16 @@ public class TokenUtils {
         }
         return false;
     }
-
+    // Metodo para verificar si los caracteres de un lexema son validos, es decir dentro del alfabeto
+    public static boolean isValidLexeme(String lexeme) {
+        for (int i = 0; i < lexeme.length(); i++) {
+            char currentChar = lexeme.charAt(i);
+            if (!isInAlphabet(currentChar)) {
+                return false;
+            }
+        }
+        return true;
+    }
     public static boolean isInAlphabet(char c) {
         return DefinitionsUtils.alphabet.contains(String.valueOf(c));
     }

@@ -4,6 +4,9 @@ import edu.robertob.lexicalanalyzerbackend.Utils.TokenType;
 import lombok.Getter;
 import lombok.Setter;
 
+import static edu.robertob.lexicalanalyzerbackend.Utils.DefinitionsUtils.keywordsPatternsMap;
+import static edu.robertob.lexicalanalyzerbackend.Utils.DefinitionsUtils.patternsMap;
+
 @Getter @Setter
 public class Token {
     private String lexeme;
@@ -17,9 +20,11 @@ public class Token {
         this.type = type;
         this.line = line;
         this.column = column;
-//        this.pattern = pattern;
-
-//        System.out.println("[CREATE TOKEN] Detected token: " + lexeme + " of type: " + type + " at line: " + line + " and column: " + column);
+        if (type != TokenType.KEYWORD){
+            this.pattern = patternsMap.get(type);
+        } else {
+            this.pattern = keywordsPatternsMap.get(lexeme);
+        }
     }
 
     public Token() {
