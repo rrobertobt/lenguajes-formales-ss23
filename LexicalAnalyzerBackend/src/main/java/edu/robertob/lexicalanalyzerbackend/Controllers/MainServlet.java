@@ -35,7 +35,7 @@ public class MainServlet extends HttpServlet {
         try (BufferedReader reader = request.getReader()) {
             String line;
             while ((line = reader.readLine()) != null) {
-                System.out.println("[SERVLET] Reading line: " + line);
+//                System.out.println("[SERVLET] Reading line: " + line);
 //                sb.append(line).append(" "); // Append space character
                 sb.append(line).append("\n"); // Append newline character
             }

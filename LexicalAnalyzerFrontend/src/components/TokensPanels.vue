@@ -59,16 +59,12 @@ export default {
       const newTokens = this.tokens.filter((token) => token.type !== 'INVALID_UNIDENTIFIED')
       return newTokens.filter((item) => {
         if (this.showSpaces && this.showNewLines) {
-          console.log('No filter')
           return true
         } else if (!this.showSpaces && this.showNewLines) {
-          console.log('No spaces')
           return item.type !== 'SPACE'
         } else if (this.showSpaces && !this.showNewLines) {
-          console.log('No new lines')
           return item.type !== 'NEW_LINE'
         } else if (!this.showSpaces && !this.showNewLines) {
-          console.log('No spaces and no new lines')
           return item.type !== 'SPACE' && item.type !== 'NEW_LINE'
         } else {
           return true

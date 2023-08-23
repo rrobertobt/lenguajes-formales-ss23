@@ -62,7 +62,6 @@ export default {
   },
   methods: {
     show() {
-      console.log(this.info)
       this.snackbar = true
     },
     hide() {

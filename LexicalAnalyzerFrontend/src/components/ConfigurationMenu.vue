@@ -2,9 +2,7 @@
   <v-menu v-model="menu" location="end" :close-on-content-click="false">
     <template #activator="{ props }">
       <v-btn icon v-bind="props" :color="buttonColor">
-        <v-icon>
-          {{ menuIcon }}
-        </v-icon>
+        <v-icon ref="menuIcon" class="menuIcon"> mdi-cog-outline </v-icon>
       </v-btn>
     </template>
     <v-card min-width="300" class="rounded-xl">
@@ -54,9 +52,6 @@ export default {
     }
   },
   computed: {
-    menuIcon() {
-      return this.menu ? 'mdi-close' : 'mdi-cog-outline'
-    },
     buttonColor() {
       return this.menu ? 'pink-accent-3' : 'black'
     }
@@ -73,8 +68,20 @@ export default {
         this.$emit('updateShowNewLines', this.showNewLines)
       },
       immediate: true
+    },
+    menu: {
+      immediate: true,
+      handler() {
+        const newTransform = this.menu ? 'rotate(-90deg)' : 'rotate(0deg)'
+        if (!this.$refs.menuIcon) return
+        this.$refs.menuIcon.$el.style.transform = newTransform
+      }
     }
   }
 }
 </script>
-<style lang=""></style>
+<style scoped>
+.menuIcon {
+  transition: transform 0.3s ease-in-out;
+}
+</style>

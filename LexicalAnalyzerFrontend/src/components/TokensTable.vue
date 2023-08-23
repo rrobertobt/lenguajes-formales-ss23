@@ -32,10 +32,17 @@
         {{ item.columns.type }}
       </span>
     </template>
+    <template #item.graphButton="{ item }">
+      <GraphDialog :lexeme="item.columns.lexeme" />
+    </template>
   </v-data-table>
 </template>
 <script>
+import GraphDialog from '@/components/dialogs/GraphDialog.vue'
 export default {
+  components: {
+    GraphDialog
+  },
   props: {
     tokens: {
       type: Array,
@@ -63,8 +70,9 @@ export default {
         { title: 'Lexema', key: 'lexeme' },
         { title: 'Tipo', key: 'type' },
         { title: 'Patrón', key: 'pattern' },
-        { width: '10', title: 'Linea', key: 'line' },
-        { width: '10px', title: 'Columna', key: 'column' }
+        { width: '10px', title: 'Linea', key: 'line' },
+        { title: 'Columna', key: 'column', width: '8px' },
+        { title: '', key: 'graphButton', sortable: false, width: '10px' }
       ]
       if (!this.showPattern) {
         normalHeaders.splice(2, 1)
@@ -77,7 +85,6 @@ export default {
 </script>
 <style scoped>
 .table-lexeme {
-  /* padding: 2px; */
   padding-left: 5px;
   padding-right: 5px;
   background-color: #dfdfdf;
@@ -87,11 +94,6 @@ export default {
 }
 
 .table-pattern {
-  /* padding: 2px; */
-  /* padding-left: 5px;
-  padding-right: 5px;
-  background-color: #dfdfdf;
-  font-weight: 600; */
   font-family: 'JetBrains Mono', monospace;
   font-size: 0.8rem;
 }
