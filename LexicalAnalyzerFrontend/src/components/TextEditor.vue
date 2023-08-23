@@ -34,7 +34,7 @@
     <div class="code-actions">
       <FileInput @file-read="readTextFromFile($event)" />
       <v-tooltip
-        text="Esta aplicación analiza el código mientras escribes, pero en caso no funcione correctamente, puedes usar este botón"
+        text="Esta aplicación analiza el código mientras escribes, pero si no funciona correctamente, puedes usar este botón"
         location="top"
         max-width="300"
         open-delay="600"

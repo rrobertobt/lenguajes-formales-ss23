@@ -1,6 +1,6 @@
 <template>
   <header class="header">
-    <h1 class="title">Analizador léxico <code>parser-py</code> - Lenguajes Formales SS 2023</h1>
+    <h2 class="title">Analizador léxico <code>parser-py</code> - Lenguajes Formales SS 2023</h2>
     <ConfigurationMenu
       @update-show-new-lines="showNewLines = $event"
       @update-show-spaces="showSpaces = $event"
@@ -30,7 +30,7 @@
 <script>
 import { API_BASE_URL } from '../utils/constants.js'
 import GeneralSnackbar from '@/components/GeneralSnackbar.vue'
-import TextEditor from '../components/TextEditor.vue'
+import TextEditor from '@/components/TextEditor.vue'
 import TokensPanels from '@/components/TokensPanels.vue'
 import ConfigurationMenu from '@/components/ConfigurationMenu.vue'
 export default {
@@ -75,7 +75,6 @@ export default {
           this.tokens = data
         })
         .catch((error) => {
-          console.error(error)
           this.snackbarInfo = {
             text: 'Ocurrió un error al analizar el código, puede que haya un problema con el servidor',
             details: error.message,
@@ -110,12 +109,14 @@ code {
 }
 .header {
   display: grid;
-  grid-template-columns: 1fr auto; /* One column for title, one for icon */
+  grid-template-columns: 1fr auto;
   align-items: center;
   justify-content: space-between;
+  padding: 0rem 1rem;
 }
 
-header h1 {
+header h2 {
   text-align: center;
+  font-weight: 900;
 }
 </style>

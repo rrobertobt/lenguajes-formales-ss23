@@ -86,7 +86,6 @@ export default {
   },
   methods: {
     validateFile(event) {
-      console.log(event)
       const file = event.target.files[0]
       if (file) {
         this.file = file
@@ -94,7 +93,6 @@ export default {
         // Obtenemos la extensión del archivo
         const fileNameParts = file.name.split('.')
         const fileExtension = fileNameParts[fileNameParts.length - 1].toLowerCase()
-        console.log(file.type)
         // Primero validamos que venga el tipo de archivo para validarlo
         if (file.type && file.type !== 'text/plain') {
           this.fileType = file.type
@@ -121,7 +119,6 @@ export default {
       if (this.file) {
         const reader = new FileReader()
         reader.onload = () => {
-          console.log(reader.result)
           // Emitir el evento con el contenido del archivo como argumento
           this.$emit('fileRead', reader.result)
           this.cancelDialog()

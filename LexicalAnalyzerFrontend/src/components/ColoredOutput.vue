@@ -1,4 +1,3 @@
-<!-- eslint-disable prettier/prettier -->
 <template>
   <pre
     v-if="tokens.length"
@@ -8,7 +7,7 @@
   </pre>
   <!-- Fallback en caso no se pueda colorear correctamente el código -->
   <pre v-else ref="codeBlock" class="code-display"
-  >{{ code }}
+    >{{ code }}
   </pre>
 </template>
 <script>
@@ -68,10 +67,6 @@ export default {
       }
     }
   }
-  // syncScrollCodeBlock(value) {
-  //   const codeBlock = this.$refs.codeBlock
-  //   codeBlock.scrollTop = value
-  // }
 }
 </script>
 
