@@ -1,15 +1,24 @@
 <template>
   <v-expansion-panels v-model="panel" mandatory>
-    <v-expansion-panel value="valid">
+    <v-expansion-panel value="1">
       <v-expansion-panel-title>
         <v-icon class="mr-3"> mdi-code-tags-check </v-icon>
-        <h3><strong>Tokens validos encontrados:</strong></h3>
+        <h3><strong>Tabla de simbolos de sintaxis</strong></h3>
       </v-expansion-panel-title>
       <v-expansion-panel-text class="mx-n6">
-        <TokensTable :tokens="filteredData" :loading="loading" />
+        <SymbolsTableSyntax :symbols-found="tokens" />
       </v-expansion-panel-text>
     </v-expansion-panel>
-    <v-expansion-panel value="invalid">
+    <v-expansion-panel value="2">
+      <v-expansion-panel-title>
+        <v-icon class="mr-3"> mdi-progress-alert </v-icon>
+        <h3><strong>Tabla de errores de sintaxis</strong></h3>
+      </v-expansion-panel-title>
+      <v-expansion-panel-text class="mx-n6">
+        <ErrorsTableSyntax :errors-found="errors" />
+      </v-expansion-panel-text>
+    </v-expansion-panel>
+    <v-expansion-panel value="3">
       <v-expansion-panel-title>
         <v-icon class="mr-3"> mdi-progress-alert </v-icon>
         <h3><strong>Errores / Tokens invalidos:</strong></h3>
@@ -19,7 +28,7 @@
           :tokens="errorTokens"
           :loading="loading"
           :show-pattern="false"
-          no-data-text="No se han encontrado errores"
+          no-data-text="No se han encontrado tokens invalidos"
         />
       </v-expansion-panel-text>
     </v-expansion-panel>
@@ -27,14 +36,18 @@
 </template>
 <script>
 import TokensTable from '@/components/TokensTable.vue'
+import SymbolsTableSyntax from '@/components/SymbolsTableSyntax.vue'
+import ErrorsTableSyntax from '@/components/ErrorsTableSyntax.vue'
 export default {
   components: {
-    TokensTable
+    TokensTable,
+    SymbolsTableSyntax,
+    ErrorsTableSyntax
   },
   props: {
-    tokens: {
-      type: Array,
-      default: () => []
+    tokensMain: {
+      type: Object,
+      default: () => {}
     },
     loading: {
       type: Boolean,
@@ -51,12 +64,18 @@ export default {
   },
   data() {
     return {
-      panel: ['valid']
+      panel: ['1']
     }
   },
   computed: {
+    tokens() {
+      return this.tokensMain?.syntaxSymbolTable?.symbolTableItems
+    },
+    errors() {
+      return this.tokensMain?.errorsTable?.errorsTableItems
+    },
     filteredData() {
-      const newTokens = this.tokens.filter((token) => token.type !== 'INVALID_UNIDENTIFIED')
+      const newTokens = this.tokens?.filter((token) => token.type !== 'INVALID_UNIDENTIFIED')
       return newTokens.filter((item) => {
         if (this.showSpaces && this.showNewLines) {
           return true
@@ -75,7 +94,7 @@ export default {
       return this.tokens.filter((token) => token.type !== 'INVALID_UNIDENTIFIED')
     },
     errorTokens() {
-      return this.tokens.filter((token) => token.type === 'INVALID_UNIDENTIFIED')
+      return this.tokens?.filter((token) => token.type === 'INVALID_UNIDENTIFIED')
     }
   }
 }
