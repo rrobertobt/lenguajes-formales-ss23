@@ -41,8 +41,8 @@ public class LexicalAnalyzer {
                 case ' ':
                     this.createToken(buffer);
                     buffer = "";
-//                    token = new Token(" ", TokenType.SPACE, this.currentLine, this.currentColumn);
-//                    this.foundTokens.add(token);
+                    token = new Token(" ", TokenType.SPACE, this.currentLine, this.currentColumn);
+                    this.foundTokens.add(token);
                     break;
                 case '\n':
                     this.createToken(buffer);

@@ -9,7 +9,7 @@
   <section class="main-section">
     <TextEditor
       :loading="loading"
-      :tokens="tokens"
+      :tokens="tokens.tokensFound"
       :tokens-length="tokensLength"
       @update-code="code = $event"
       @analyze-code="analyze"
@@ -17,7 +17,7 @@
     />
     <div class="table-area">
       <TokensPanels
-        :tokens="tokens"
+        :tokens-main="tokens"
         :loading="loading"
         :show-spaces="showSpaces"
         :show-new-lines="showNewLines"
@@ -57,13 +57,13 @@ export default {
   },
   computed: {
     tokensLength() {
-      return this.tokens.length
+      return this.tokens?.tokensFound?.length
     }
   },
   methods: {
     analyze() {
       this.loading = true
-      fetch(`${API_BASE_URL}/analyze`, {
+      fetch(`${API_BASE_URL}/syntax`, {
         method: 'POST',
         headers: {
           'Content-Type': 'text/plain'

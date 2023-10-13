@@ -1,6 +1,7 @@
 package edu.robertob.lexicalanalyzerbackend.Utils;
 
 import java.util.Map;
+import java.util.Stack;
 
 // Clase que contiene métodos útiles para el análisis léxico, especificamente para el procesamiento de tokens
 public class TokenUtils {
@@ -53,5 +54,23 @@ public class TokenUtils {
 
     public static boolean isLogicOperator(String lexeme) {
         return lexeme.equals("and") || lexeme.equals("or") || lexeme.equals("not");
+    }
+
+    public static boolean isParenthesesBalanced(String input) {
+        Stack<Character> stack = new Stack<>();
+
+        for (char c : input.toCharArray()) {
+            if (c == '(') {
+                stack.push(c);
+            } else if (c == ')') {
+                if (stack.isEmpty()) {
+                    return false; // Unmatched closing parenthesis
+                } else {
+                    stack.pop(); // Matched closing parenthesis
+                }
+            }
+        }
+
+        return stack.isEmpty(); // If the stack is empty, all parentheses are balanced
     }
 }
