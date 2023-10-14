@@ -1,4 +1,4 @@
-package edu.robertob.lexicalanalyzerbackend.Utils;
+package edu.robertob.syntaxanalyzerbackend.Utils;
 
 import java.util.Map;
 

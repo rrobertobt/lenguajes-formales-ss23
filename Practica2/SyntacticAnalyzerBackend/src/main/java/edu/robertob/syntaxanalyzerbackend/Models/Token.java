@@ -1,11 +1,8 @@
-package edu.robertob.lexicalanalyzerbackend.Models;
+package edu.robertob.syntaxanalyzerbackend.Models;
 
-import edu.robertob.lexicalanalyzerbackend.Utils.TokenType;
+import edu.robertob.syntaxanalyzerbackend.Utils.TokenType;
 import lombok.Getter;
 import lombok.Setter;
-
-import static edu.robertob.lexicalanalyzerbackend.Utils.DefinitionsUtils.keywordsPatternsMap;
-import static edu.robertob.lexicalanalyzerbackend.Utils.DefinitionsUtils.patternsMap;
 
 @Getter @Setter
 public class Token {

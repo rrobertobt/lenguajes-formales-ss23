@@ -1,13 +1,11 @@
-package edu.robertob.lexicalanalyzerbackend.Controllers;
+package edu.robertob.syntaxanalyzerbackend.Controllers;
 
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.sun.tools.javac.Main;
-import edu.robertob.lexicalanalyzerbackend.Models.LexicalAnalyzer;
-import edu.robertob.lexicalanalyzerbackend.Models.Token;
-import edu.robertob.lexicalanalyzerbackend.Utils.GsonWrapper;
+import edu.robertob.syntaxanalyzerbackend.Models.LexicalAnalyzer;
+import edu.robertob.syntaxanalyzerbackend.Utils.GsonWrapper;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
 

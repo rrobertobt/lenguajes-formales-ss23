@@ -1,4 +1,4 @@
-package edu.robertob.lexicalanalyzerbackend.Filters;
+package edu.robertob.syntaxanalyzerbackend.Filters;
 
 import jakarta.servlet.*;
 import jakarta.servlet.http.HttpServletRequest;

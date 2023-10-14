@@ -1,4 +1,4 @@
-package edu.robertob.lexicalanalyzerbackend.Controllers;
+package edu.robertob.syntaxanalyzerbackend.Controllers;
 
 public class Test {
     int[][] matrix = {

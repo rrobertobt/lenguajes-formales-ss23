@@ -5,7 +5,7 @@
          version="5.0">
     <filter>
         <filter-name>CORSFilter</filter-name>
-        <filter-class>edu.robertob.lexicalanalyzerbackend.Filters.CORSFilter</filter-class>
+        <filter-class>edu.robertob.syntaxanalyzerbackend.Filters.CORSFilter</filter-class>
     </filter>
     <filter-mapping>
         <filter-name>CORSFilter</filter-name>

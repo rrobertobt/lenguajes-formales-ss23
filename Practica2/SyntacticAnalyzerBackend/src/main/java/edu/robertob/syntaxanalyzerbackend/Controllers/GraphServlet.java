@@ -1,4 +1,4 @@
-package edu.robertob.lexicalanalyzerbackend.Controllers;
+package edu.robertob.syntaxanalyzerbackend.Controllers;
 
 import guru.nidi.graphviz.attribute.Color;
 import guru.nidi.graphviz.attribute.Font;

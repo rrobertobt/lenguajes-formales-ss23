@@ -11,9 +11,27 @@
   <component name="ChangeListManager">
     <list default="true" id="960ead9b-9d26-45d2-807d-1b72e3801084" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/robertob/lexicalanalyzerbackend/Models/SyntaxAnalyzer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/robertob/lexicalanalyzerbackend/Models/SyntaxAnalyzer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../SyntacticAnalyzerFrontend/src/components/TokensPanels.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../SyntacticAnalyzerFrontend/src/components/TokensPanels.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../SyntacticAnalyzerFrontend/src/views/MainView.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../SyntacticAnalyzerFrontend/src/views/MainView.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/edu/robertob/lexicalanalyzerbackend/Controllers/GraphServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/robertob/syntaxanalyzerbackend/Controllers/GraphServlet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/edu/robertob/lexicalanalyzerbackend/Controllers/MainServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/robertob/syntaxanalyzerbackend/Controllers/MainServlet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/edu/robertob/lexicalanalyzerbackend/Controllers/SyntaxServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/robertob/syntaxanalyzerbackend/Controllers/SyntaxServlet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/edu/robertob/lexicalanalyzerbackend/Controllers/Test.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/robertob/syntaxanalyzerbackend/Controllers/Test.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/edu/robertob/lexicalanalyzerbackend/Filters/CORSFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/robertob/syntaxanalyzerbackend/Filters/CORSFilter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/edu/robertob/lexicalanalyzerbackend/Models/LexicalAnalyzer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/robertob/syntaxanalyzerbackend/Models/LexicalAnalyzer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/edu/robertob/lexicalanalyzerbackend/Models/SyntaxAnalyzer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/robertob/syntaxanalyzerbackend/Models/SyntaxAnalyzer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/edu/robertob/lexicalanalyzerbackend/Models/Syntaxis/ErrorTableItem.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/robertob/syntaxanalyzerbackend/Models/Syntaxis/ErrorTableItem.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/edu/robertob/lexicalanalyzerbackend/Models/Syntaxis/ErrorsTable.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/robertob/syntaxanalyzerbackend/Models/Syntaxis/ErrorsTable.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/edu/robertob/lexicalanalyzerbackend/Models/Syntaxis/MethodCallTableItem.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/robertob/syntaxanalyzerbackend/Models/Syntaxis/MethodCallTableItem.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/edu/robertob/lexicalanalyzerbackend/Models/Syntaxis/MethodCallsTable.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/robertob/syntaxanalyzerbackend/Models/Syntaxis/MethodCallsTable.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/edu/robertob/lexicalanalyzerbackend/Models/Syntaxis/SymbolTableItem.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/robertob/syntaxanalyzerbackend/Models/Syntaxis/SymbolTableItem.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/edu/robertob/lexicalanalyzerbackend/Models/Syntaxis/SymbolType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/robertob/syntaxanalyzerbackend/Models/Syntaxis/SymbolType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/edu/robertob/lexicalanalyzerbackend/Models/Syntaxis/SyntaxEndpointResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/robertob/syntaxanalyzerbackend/Models/Syntaxis/SyntaxEndpointResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/edu/robertob/lexicalanalyzerbackend/Models/Syntaxis/SyntaxSymbolTable.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/robertob/syntaxanalyzerbackend/Models/Syntaxis/SyntaxSymbolTable.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/edu/robertob/lexicalanalyzerbackend/Models/Token.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/robertob/syntaxanalyzerbackend/Models/Token.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/edu/robertob/lexicalanalyzerbackend/Utils/DefinitionsUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/robertob/syntaxanalyzerbackend/Utils/DefinitionsUtils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/edu/robertob/lexicalanalyzerbackend/Utils/GsonWrapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/robertob/syntaxanalyzerbackend/Utils/GsonWrapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/edu/robertob/lexicalanalyzerbackend/Utils/TokenType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/robertob/syntaxanalyzerbackend/Utils/TokenType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/edu/robertob/lexicalanalyzerbackend/Utils/TokenUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/robertob/syntaxanalyzerbackend/Utils/TokenUtils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -62,7 +80,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "feature/method-call-table",
+    "git-widget-placeholder": "feature/manuals-p2",
     "last_opened_file_path": "/Users/robertob/Developer/Universidad/2023 Segundo Semestre/lenguajes-formales-ss23/Practica2/SyntacticAnalyzerBackend",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -172,7 +190,7 @@
       <option name="presentableId" value="Default" />
       <updated>1697225655733</updated>
       <workItem from="1697225656787" duration="161000" />
-      <workItem from="1697245945879" duration="12558000" />
+      <workItem from="1697245945879" duration="14352000" />
     </task>
     <servers />
   </component>

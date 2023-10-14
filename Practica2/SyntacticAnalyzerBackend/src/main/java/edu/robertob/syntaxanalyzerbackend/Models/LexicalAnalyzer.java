@@ -1,12 +1,12 @@
-package edu.robertob.lexicalanalyzerbackend.Models;
+package edu.robertob.syntaxanalyzerbackend.Models;
 
-import edu.robertob.lexicalanalyzerbackend.Utils.DefinitionsUtils;
-import edu.robertob.lexicalanalyzerbackend.Utils.TokenType;
+import edu.robertob.syntaxanalyzerbackend.Utils.DefinitionsUtils;
+import edu.robertob.syntaxanalyzerbackend.Utils.TokenType;
 import lombok.Getter;
 
 import java.util.*;
 
-import static edu.robertob.lexicalanalyzerbackend.Utils.TokenUtils.*;
+import static edu.robertob.syntaxanalyzerbackend.Utils.TokenUtils.*;
 
 // Clase base que contiene la lógica para el análisis léxico
 public class LexicalAnalyzer {
