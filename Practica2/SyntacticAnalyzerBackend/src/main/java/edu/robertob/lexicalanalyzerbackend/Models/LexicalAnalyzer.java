@@ -187,6 +187,23 @@ public class LexicalAnalyzer {
                         buffer = "";
                         i++;
                         break;
+                    // También revisar, si el siguiente caracter es un *, si es así, cuenta como potencia
+                    } else if (i + 1 < codeChars.length && codeChars[i + 1] == '*') {
+                        // Y luego revisar si el siguiente caracter es un =, si es así, cuenta como asignación de potencia
+                        if (i + 2 < codeChars.length && codeChars[i + 2] == '=') {
+                            this.createToken(buffer);
+                            this.createToken("**=");
+                            buffer = "";
+                            i += 2;
+                            break;
+                        } else {
+                            this.createToken(buffer);
+                            this.createToken("**");
+                            buffer = "";
+                            i++;
+                            break;
+                        }
+
                     } else {
                         this.createToken(buffer);
                         this.createToken("*");
@@ -224,10 +241,19 @@ public class LexicalAnalyzer {
                     }
                     break;
                 case '%':
-                    this.createToken(buffer);
-                    this.createToken("%");
-                    buffer = "";
-                    break;
+                    // Revisa si el siguiente caracter es un =, si es así, cuenta como asignación de módulo
+                    if (i + 1 < codeChars.length && codeChars[i + 1] == '=') {
+                        this.createToken(buffer);
+                        this.createToken("%=");
+                        buffer = "";
+                        i++;
+                        break;
+                    } else {
+                        this.createToken(buffer);
+                        this.createToken("%");
+                        buffer = "";
+                        break;
+                    }
                 case '<':
                     // Revisa si el siguiente caracter es un =, si es así, cuenta como comparación pero menor o igual que
                     if (i + 1 < codeChars.length && codeChars[i + 1] == '=') {
