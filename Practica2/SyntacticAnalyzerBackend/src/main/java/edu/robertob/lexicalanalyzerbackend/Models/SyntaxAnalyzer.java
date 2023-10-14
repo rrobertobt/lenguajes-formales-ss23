@@ -14,11 +14,14 @@ public class SyntaxAnalyzer {
     private SyntaxSymbolTable symbolTable;
     @Getter()
     private ErrorsTable errorsTable;
+    @Getter()
+    private MethodCallsTable methodCallsTable;
     private int currentIndex;
     public void analyzeTokens(List<Token> tokensToAnalyze) {
         this.tokens = tokensToAnalyze;
         this.symbolTable = new SyntaxSymbolTable();
         this.errorsTable = new ErrorsTable();
+        this.methodCallsTable = new MethodCallsTable();
         this.currentIndex = 0;
         parse();
     }
@@ -58,7 +61,8 @@ public class SyntaxAnalyzer {
                     // Agregar a la tabla de símbolos
                     symbolTable.addSymbolTableItem(new SymbolTableItem(name, SymbolType.VARIABLE, value, id.getLine(), id.getColumn()));
                     // También verifiquemos si esa columna y linea tinen algun error existente, si es así, lo eliminamos
-                    errorsTable.removeErrorTableItem(id.getLine(), id.getColumn()+1);
+                    System.out.println("Eliminando error de sintaxis en la expresión: "+id.getLine()+":"+(id.getColumn()+1));
+                    errorsTable.removeErrorTableItem(id.getLine(), id.getColumn());
                     System.out.println("[SYNTAX] 😁😁😁 = Asignación correcta => id: " + id.getLexeme() + " | valor: " + value + "\n");
                     return true;
                 } else {
@@ -94,10 +98,12 @@ public class SyntaxAnalyzer {
                     if (match(TokenType.PUNCTUATION_PARENTHESIS_CLOSE)) {
                         // Agregar a la tabla de símbolos
                         symbolTable.addSymbolTableItem(new SymbolTableItem(tokens.get(idIndex).getLexeme(), SymbolType.METHOD_CALL, "", tokens.get(idIndex).getLine(), tokens.get(idIndex).getColumn()));
+                        // Agregar a la tabla de llamadas a método
+                        methodCallsTable.registerItem(tokens.get(idIndex).getLexeme(), tokens.get(idIndex).getLine());
                         System.out.println("[SYNTAX] 😁😁😁 = Llamada a método correcta => metodo: " + tokens.get(idIndex).getLexeme() + "\n");
                         return true;
                     } else {
-                        this.errorsTable.addErrorTableItem(new ErrorTableItem("Falta un paréntesis cerrado en llamada a método", tokens.get(currentIndex).getLine(), tokens.get(currentIndex).getColumn()));
+                        this.errorsTable.addErrorTableItem(new ErrorTableItem("Falta un paréntesis cerrado en llamada a método", tokens.get(currentIndex-1).getLine(), tokens.get(currentIndex-1).getColumn()));
                         System.out.println("Falta un paréntesis cerrado en llamada a método");
                         return false;
                     }
@@ -108,9 +114,9 @@ public class SyntaxAnalyzer {
                     return false;
                 }
             } else {
+                currentIndex = checkpoint;
                 this.errorsTable.addErrorTableItem(new ErrorTableItem("Se esperaba un paréntesis abierto para la llamada a método", tokens.get(currentIndex).getLine(), tokens.get(currentIndex).getColumn()));
                 System.out.println("Se esperaba un paréntesis abierto para la llamada a método.");
-                currentIndex = checkpoint;
                 return false;
             }
         }
@@ -154,8 +160,9 @@ public class SyntaxAnalyzer {
     private boolean term() {
         if (
                 // Si el termino por alguna razón contiene una nueva línea, no es un término válido
-                !match(TokenType.NEW_LINE) &&
-                (match(TokenType.IDENTIFIER) || match(TokenType.STRING) || match(TokenType.NUMERIC_CONSTANT_WHOLE) || match(TokenType.NUMERIC_CONSTANT_DECIMAL) || match(TokenType.LOGIC_TRUE) || match(TokenType.LOGIC_FALSE))) {
+            !match(TokenType.NEW_LINE) &&
+            (methodCall() || match(TokenType.IDENTIFIER) || match(TokenType.STRING) || match(TokenType.NUMERIC_CONSTANT_WHOLE) || match(TokenType.NUMERIC_CONSTANT_DECIMAL) || match(TokenType.LOGIC_TRUE) || match(TokenType.LOGIC_FALSE))
+        ) {
             return true;
         } else if (match(TokenType.PUNCTUATION_PARENTHESIS_OPEN)) {
             if (expression()) {

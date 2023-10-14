@@ -10,24 +10,22 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="960ead9b-9d26-45d2-807d-1b72e3801084" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dictionaries/robertob.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/uiDesigner.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/robertob/lexicalanalyzerbackend/Models/LexicalAnalyzer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/robertob/lexicalanalyzerbackend/Models/LexicalAnalyzer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/edu/robertob/lexicalanalyzerbackend/Models/SyntaxAnalyzer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/robertob/lexicalanalyzerbackend/Models/SyntaxAnalyzer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/robertob/lexicalanalyzerbackend/Models/Syntaxis/ErrorsTable.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/robertob/lexicalanalyzerbackend/Models/Syntaxis/ErrorsTable.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/robertob/lexicalanalyzerbackend/Models/Syntaxis/SymbolType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/robertob/lexicalanalyzerbackend/Models/Syntaxis/SymbolType.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/robertob/lexicalanalyzerbackend/Utils/DefinitionsUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/robertob/lexicalanalyzerbackend/Utils/DefinitionsUtils.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/robertob/lexicalanalyzerbackend/Utils/TokenType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/robertob/lexicalanalyzerbackend/Utils/TokenType.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../SyntacticAnalyzerFrontend/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/../SyntacticAnalyzerFrontend/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../SyntacticAnalyzerFrontend/src/components/TokensPanels.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../SyntacticAnalyzerFrontend/src/components/TokensPanels.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../SyntacticAnalyzerFrontend/src/components/TokensTable.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../SyntacticAnalyzerFrontend/src/components/TokensTable.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SyntacticAnalyzerFrontend/src/views/MainView.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../SyntacticAnalyzerFrontend/src/views/MainView.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
@@ -64,12 +62,14 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "feature/practica-2",
+    "git-widget-placeholder": "feature/method-call-table",
     "last_opened_file_path": "/Users/robertob/Developer/Universidad/2023 Segundo Semestre/lenguajes-formales-ss23/Practica2/SyntacticAnalyzerBackend",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "reference.settingsdialog.IDE.editor.colors.Console Font",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -172,7 +172,7 @@
       <option name="presentableId" value="Default" />
       <updated>1697225655733</updated>
       <workItem from="1697225656787" duration="161000" />
-      <workItem from="1697245945879" duration="8589000" />
+      <workItem from="1697245945879" duration="12558000" />
     </task>
     <servers />
   </component>
