@@ -1,8 +1,7 @@
-package edu.robertob.lexicalanalyzerbackend.Models;
+package edu.robertob.syntaxanalyzerbackend.Models;
 
-import edu.robertob.lexicalanalyzerbackend.Models.Syntaxis.*;
-import edu.robertob.lexicalanalyzerbackend.Utils.TokenType;
-import edu.robertob.lexicalanalyzerbackend.Utils.TokenUtils;
+import edu.robertob.syntaxanalyzerbackend.Models.Syntaxis.*;
+import edu.robertob.syntaxanalyzerbackend.Utils.TokenType;
 import lombok.Getter;
 
 import java.util.List;
@@ -115,8 +114,11 @@ public class SyntaxAnalyzer {
                 }
             } else {
                 currentIndex = checkpoint;
-                this.errorsTable.addErrorTableItem(new ErrorTableItem("Se esperaba un paréntesis abierto para la llamada a método", tokens.get(currentIndex).getLine(), tokens.get(currentIndex).getColumn()));
-                System.out.println("Se esperaba un paréntesis abierto para la llamada a método.");
+                System.out.println("token at"+currentIndex+" is "+tokens.get(currentIndex).getType());
+                if (!tokens.get(currentIndex).getType().equals(TokenType.IDENTIFIER)){
+                    this.errorsTable.addErrorTableItem(new ErrorTableItem("Se esperaba un paréntesis abierto para la llamada a método", tokens.get(currentIndex).getLine(), tokens.get(currentIndex).getColumn()));
+                    System.out.println("Se esperaba un paréntesis abierto para la llamada a método.");
+                }
                 return false;
             }
         }

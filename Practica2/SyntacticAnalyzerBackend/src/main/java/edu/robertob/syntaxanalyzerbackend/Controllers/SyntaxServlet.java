@@ -1,11 +1,11 @@
-package edu.robertob.lexicalanalyzerbackend.Controllers;
+package edu.robertob.syntaxanalyzerbackend.Controllers;
 
-import edu.robertob.lexicalanalyzerbackend.Models.LexicalAnalyzer;
-import edu.robertob.lexicalanalyzerbackend.Models.SyntaxAnalyzer;
-import edu.robertob.lexicalanalyzerbackend.Models.Syntaxis.SyntaxEndpointResponse;
-import edu.robertob.lexicalanalyzerbackend.Models.Token;
-import edu.robertob.lexicalanalyzerbackend.Utils.GsonWrapper;
-import edu.robertob.lexicalanalyzerbackend.Utils.TokenType;
+import edu.robertob.syntaxanalyzerbackend.Models.LexicalAnalyzer;
+import edu.robertob.syntaxanalyzerbackend.Models.SyntaxAnalyzer;
+import edu.robertob.syntaxanalyzerbackend.Models.Syntaxis.SyntaxEndpointResponse;
+import edu.robertob.syntaxanalyzerbackend.Models.Token;
+import edu.robertob.syntaxanalyzerbackend.Utils.GsonWrapper;
+import edu.robertob.syntaxanalyzerbackend.Utils.TokenType;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;

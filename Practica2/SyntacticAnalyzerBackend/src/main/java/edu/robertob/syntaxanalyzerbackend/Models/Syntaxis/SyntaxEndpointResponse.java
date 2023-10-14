@@ -1,6 +1,6 @@
-package edu.robertob.lexicalanalyzerbackend.Models.Syntaxis;
+package edu.robertob.syntaxanalyzerbackend.Models.Syntaxis;
 
-import edu.robertob.lexicalanalyzerbackend.Models.Token;
+import edu.robertob.syntaxanalyzerbackend.Models.Token;
 import lombok.Data;
 
 import java.util.List;

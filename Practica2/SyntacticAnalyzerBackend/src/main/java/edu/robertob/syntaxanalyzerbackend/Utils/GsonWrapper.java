@@ -1,4 +1,4 @@
-package edu.robertob.lexicalanalyzerbackend.Utils;
+package edu.robertob.syntaxanalyzerbackend.Utils;
 
 import com.google.gson.Gson;
 import jakarta.servlet.http.HttpServletResponse;

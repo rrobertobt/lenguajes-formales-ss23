@@ -1,4 +1,4 @@
-package edu.robertob.lexicalanalyzerbackend.Models.Syntaxis;
+package edu.robertob.syntaxanalyzerbackend.Models.Syntaxis;
 
 import java.util.ArrayList;
 import java.util.List;
