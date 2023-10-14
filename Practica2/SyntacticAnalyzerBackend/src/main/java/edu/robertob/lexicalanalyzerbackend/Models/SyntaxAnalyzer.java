@@ -14,11 +14,14 @@ public class SyntaxAnalyzer {
     private SyntaxSymbolTable symbolTable;
     @Getter()
     private ErrorsTable errorsTable;
+    @Getter()
+    private MethodCallsTable methodCallsTable;
     private int currentIndex;
     public void analyzeTokens(List<Token> tokensToAnalyze) {
         this.tokens = tokensToAnalyze;
         this.symbolTable = new SyntaxSymbolTable();
         this.errorsTable = new ErrorsTable();
+        this.methodCallsTable = new MethodCallsTable();
         this.currentIndex = 0;
         parse();
     }
@@ -94,6 +97,8 @@ public class SyntaxAnalyzer {
                     if (match(TokenType.PUNCTUATION_PARENTHESIS_CLOSE)) {
                         // Agregar a la tabla de símbolos
                         symbolTable.addSymbolTableItem(new SymbolTableItem(tokens.get(idIndex).getLexeme(), SymbolType.METHOD_CALL, "", tokens.get(idIndex).getLine(), tokens.get(idIndex).getColumn()));
+                        // Agregar a la tabla de llamadas a método
+                        methodCallsTable.registerItem(tokens.get(idIndex).getLexeme(), tokens.get(idIndex).getLine());
                         System.out.println("[SYNTAX] 😁😁😁 = Llamada a método correcta => metodo: " + tokens.get(idIndex).getLexeme() + "\n");
                         return true;
                     } else {
@@ -154,8 +159,9 @@ public class SyntaxAnalyzer {
     private boolean term() {
         if (
                 // Si el termino por alguna razón contiene una nueva línea, no es un término válido
-                !match(TokenType.NEW_LINE) &&
-                (match(TokenType.IDENTIFIER) || match(TokenType.STRING) || match(TokenType.NUMERIC_CONSTANT_WHOLE) || match(TokenType.NUMERIC_CONSTANT_DECIMAL) || match(TokenType.LOGIC_TRUE) || match(TokenType.LOGIC_FALSE))) {
+            !match(TokenType.NEW_LINE) &&
+            (methodCall() || match(TokenType.IDENTIFIER) || match(TokenType.STRING) || match(TokenType.NUMERIC_CONSTANT_WHOLE) || match(TokenType.NUMERIC_CONSTANT_DECIMAL) || match(TokenType.LOGIC_TRUE) || match(TokenType.LOGIC_FALSE))
+        ) {
             return true;
         } else if (match(TokenType.PUNCTUATION_PARENTHESIS_OPEN)) {
             if (expression()) {

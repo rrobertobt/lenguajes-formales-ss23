@@ -43,7 +43,8 @@ public class SyntaxServlet extends HttpServlet {
         this.syntaxEndpointResponse = new SyntaxEndpointResponse(
             this.tokensToAnalyze,
             this.syntaxAnalyzer.getSymbolTable(),
-            this.syntaxAnalyzer.getErrorsTable()
+            this.syntaxAnalyzer.getErrorsTable(),
+            this.syntaxAnalyzer.getMethodCallsTable()
         );
         this.gsonWrapper.sendAsJson(resp, this.syntaxEndpointResponse);
     }
