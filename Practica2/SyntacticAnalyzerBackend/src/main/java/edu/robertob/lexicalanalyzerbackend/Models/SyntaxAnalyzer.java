@@ -44,7 +44,9 @@ public class SyntaxAnalyzer {
         if (match(TokenType.IDENTIFIER)) {
             id = tokens.get(currentIndex - 1);
             name = id.getLexeme();
-            if (match(TokenType.OPERATOR_ASSIGNMENT) || match(TokenType.OPERATOR_ASSIGNMENT_SUM) || match(TokenType.OPERATOR_ASSIGNMENT_SUB) || match(TokenType.OPERATOR_ASSIGNMENT_MUL) || match(TokenType.OPERATOR_ASSIGNMENT_DIV)) {
+            if (match(TokenType.OPERATOR_ASSIGNMENT) || match(TokenType.OPERATOR_ASSIGNMENT_SUM) || match(TokenType.OPERATOR_ASSIGNMENT_SUB) || match(TokenType.OPERATOR_ASSIGNMENT_MUL) || match(TokenType.OPERATOR_ASSIGNMENT_DIV)
+            || match(TokenType.OPERATOR_ASSIGNMENT_MOD) || match(TokenType.OPERATOR_ASSIGNMENT_EXP)
+            ) {
                 indexFromAssToken = currentIndex;
                 if (expression()) {
                     // Get the value of the expression by going from the token agter the assignment token to the token before the current index
@@ -53,7 +55,10 @@ public class SyntaxAnalyzer {
                             value += tokens.get(i).getLexeme();
                         }
                     }
+                    // Agregar a la tabla de símbolos
                     symbolTable.addSymbolTableItem(new SymbolTableItem(name, SymbolType.VARIABLE, value, id.getLine(), id.getColumn()));
+                    // También verifiquemos si esa columna y linea tinen algun error existente, si es así, lo eliminamos
+                    errorsTable.removeErrorTableItem(id.getLine(), id.getColumn()+1);
                     System.out.println("[SYNTAX] 😁😁😁 = Asignación correcta => id: " + id.getLexeme() + " | valor: " + value + "\n");
                     return true;
                 } else {
@@ -81,22 +86,29 @@ public class SyntaxAnalyzer {
     private boolean methodCall(){
         System.out.println("m() [SYNTAX] Trying to match method call");
         int checkpoint = currentIndex;
+        int idIndex;
         if (match(TokenType.IDENTIFIER)) {
+            idIndex = currentIndex - 1;
             if (match(TokenType.PUNCTUATION_PARENTHESIS_OPEN)) {
                 if (arguments()) {
                     if (match(TokenType.PUNCTUATION_PARENTHESIS_CLOSE)) {
                         // Agregar a la tabla de símbolos
-                        System.out.println("[SYNTAX] 😁😁😁 = Llamada a método correcta => metodo: " + tokens.get(currentIndex - 3).getLexeme() + "\n");
+                        symbolTable.addSymbolTableItem(new SymbolTableItem(tokens.get(idIndex).getLexeme(), SymbolType.METHOD_CALL, "", tokens.get(idIndex).getLine(), tokens.get(idIndex).getColumn()));
+                        System.out.println("[SYNTAX] 😁😁😁 = Llamada a método correcta => metodo: " + tokens.get(idIndex).getLexeme() + "\n");
                         return true;
                     } else {
-                        System.out.println("Falta un paréntesis cerrado.");
+                        this.errorsTable.addErrorTableItem(new ErrorTableItem("Falta un paréntesis cerrado en llamada a método", tokens.get(currentIndex).getLine(), tokens.get(currentIndex).getColumn()));
+                        System.out.println("Falta un paréntesis cerrado en llamada a método");
                         return false;
                     }
                 } else {
-                    System.out.println("Se esperaba un argumento(s) dentro de paréntesis.");
+                    this.errorsTable.addErrorTableItem(new ErrorTableItem("Se esperaba(n) argumento(s) dentro de paréntesis", tokens.get(currentIndex).getLine(), tokens.get(currentIndex).getColumn()));
+                    System.out.println("Se esperaba(n) argumento(s) dentro de paréntesis.");
+//                    currentIndex = checkpoint;
                     return false;
                 }
             } else {
+                this.errorsTable.addErrorTableItem(new ErrorTableItem("Se esperaba un paréntesis abierto para la llamada a método", tokens.get(currentIndex).getLine(), tokens.get(currentIndex).getColumn()));
                 System.out.println("Se esperaba un paréntesis abierto para la llamada a método.");
                 currentIndex = checkpoint;
                 return false;
@@ -108,6 +120,7 @@ public class SyntaxAnalyzer {
     }
 
     private boolean arguments(){
+        System.out.println("m(a,a) [SYNTAX] Trying to match arguments");
         if (expression()) {
             while (match(TokenType.PUNCTUATION_COMMA)) {
                 if (expression()) {
@@ -126,7 +139,7 @@ public class SyntaxAnalyzer {
     private boolean expression() {
         System.out.println("[SYNTAX] Trying to match expression");
         if (term()) {
-            while (match(TokenType.OPERATOR_ARITHMETIC)) {
+            while (match(TokenType.OPERATOR_ARITHMETIC) || match(TokenType.OPERATOR_COMPARISON) || match(TokenType.OPERATOR_LOGIC)) {
                 if (term()) {
                     // La expresión sigue siendo válida
                 } else {

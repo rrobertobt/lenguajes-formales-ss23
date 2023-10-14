@@ -94,7 +94,7 @@ export default {
       return this.tokens.filter((token) => token.type !== 'INVALID_UNIDENTIFIED')
     },
     errorTokens() {
-      return this.tokens?.filter((token) => token.type === 'INVALID_UNIDENTIFIED')
+      return this.tokensMain?.tokensFound?.filter((token) => token.type === 'INVALID_UNIDENTIFIED')
     }
   }
 }
