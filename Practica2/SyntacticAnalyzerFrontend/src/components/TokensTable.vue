@@ -32,9 +32,9 @@
         {{ item.columns.type }}
       </span>
     </template>
-    <template #item.graphButton="{ item }">
+    <!-- <template #item.graphButton="{ item }">
       <GraphDialog :lexeme="item.columns.lexeme" />
-    </template>
+    </template> -->
   </v-data-table>
 </template>
 <script>

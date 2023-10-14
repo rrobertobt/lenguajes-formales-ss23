@@ -2,5 +2,7 @@ package edu.robertob.lexicalanalyzerbackend.Models.Syntaxis;
 
 public enum SymbolType {
     VARIABLE,
-    FUNCTION,
+    METHOD,
+    METHOD_CALL,
+
 }

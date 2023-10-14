@@ -55,6 +55,8 @@ public class DefinitionsUtils {
         map.put("+=", TokenType.OPERATOR_ASSIGNMENT_SUM);
         map.put("-=", TokenType.OPERATOR_ASSIGNMENT_SUB);
         map.put("*=", TokenType.OPERATOR_ASSIGNMENT_MUL);
+        map.put("**=", TokenType.OPERATOR_ASSIGNMENT_EXP);
+        map.put("%=", TokenType.OPERATOR_ASSIGNMENT_MOD);
         map.put("/=", TokenType.OPERATOR_ASSIGNMENT_DIV);
         // Operators (comparison)
         map.put("==", TokenType.OPERATOR_COMPARISON);
