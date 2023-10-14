@@ -1,6 +1,8 @@
 <template>
   <header class="header">
-    <h2 class="title">Analizador léxico ∙ <code>parser-py</code> ∙ Lenguajes Formales SS 2023</h2>
+    <h2 class="title">
+      Analizador sintáctico ∙ <code>parser-py</code> ∙ Lenguajes Formales SS 2023
+    </h2>
     <ConfigurationMenu
       @update-show-new-lines="showNewLines = $event"
       @update-show-spaces="showSpaces = $event"

@@ -11,6 +11,18 @@
     </v-expansion-panel>
     <v-expansion-panel value="2">
       <v-expansion-panel-title>
+        <v-icon class="mr-3"> mdi-code-tags-check </v-icon>
+        <h3 class="mr-8"><strong>Tabla de llamadas a metodos</strong></h3>
+        <span>
+          Total de métodos encontrados: <strong>{{ methodsCalled?.totalMethodsCalled }}</strong>
+        </span>
+      </v-expansion-panel-title>
+      <v-expansion-panel-text class="mx-n6">
+        <MethodsCallsTable :methods-calls-table="methodsCalled" />
+      </v-expansion-panel-text>
+    </v-expansion-panel>
+    <v-expansion-panel value="3">
+      <v-expansion-panel-title>
         <v-icon class="mr-3"> mdi-progress-alert </v-icon>
         <h3><strong>Tabla de errores de sintaxis</strong></h3>
       </v-expansion-panel-title>
@@ -18,7 +30,7 @@
         <ErrorsTableSyntax :errors-found="errors" />
       </v-expansion-panel-text>
     </v-expansion-panel>
-    <v-expansion-panel value="3">
+    <v-expansion-panel value="4">
       <v-expansion-panel-title>
         <v-icon class="mr-3"> mdi-progress-alert </v-icon>
         <h3><strong>Errores / Tokens invalidos:</strong></h3>
@@ -38,11 +50,13 @@
 import TokensTable from '@/components/TokensTable.vue'
 import SymbolsTableSyntax from '@/components/SymbolsTableSyntax.vue'
 import ErrorsTableSyntax from '@/components/ErrorsTableSyntax.vue'
+import MethodsCallsTable from '@/components/MethodsCallsTable.vue'
 export default {
   components: {
     TokensTable,
     SymbolsTableSyntax,
-    ErrorsTableSyntax
+    ErrorsTableSyntax,
+    MethodsCallsTable
   },
   props: {
     tokensMain: {
@@ -73,6 +87,9 @@ export default {
     },
     errors() {
       return this.tokensMain?.errorsTable?.errorsTableItems
+    },
+    methodsCalled() {
+      return this.tokensMain?.methodCallsTable
     },
     filteredData() {
       const newTokens = this.tokens?.filter((token) => token.type !== 'INVALID_UNIDENTIFIED')

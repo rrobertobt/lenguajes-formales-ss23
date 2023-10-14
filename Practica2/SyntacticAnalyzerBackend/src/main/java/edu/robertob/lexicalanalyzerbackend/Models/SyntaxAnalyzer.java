@@ -61,7 +61,8 @@ public class SyntaxAnalyzer {
                     // Agregar a la tabla de símbolos
                     symbolTable.addSymbolTableItem(new SymbolTableItem(name, SymbolType.VARIABLE, value, id.getLine(), id.getColumn()));
                     // También verifiquemos si esa columna y linea tinen algun error existente, si es así, lo eliminamos
-                    errorsTable.removeErrorTableItem(id.getLine(), id.getColumn()+1);
+                    System.out.println("Eliminando error de sintaxis en la expresión: "+id.getLine()+":"+(id.getColumn()+1));
+                    errorsTable.removeErrorTableItem(id.getLine(), id.getColumn());
                     System.out.println("[SYNTAX] 😁😁😁 = Asignación correcta => id: " + id.getLexeme() + " | valor: " + value + "\n");
                     return true;
                 } else {
@@ -102,7 +103,7 @@ public class SyntaxAnalyzer {
                         System.out.println("[SYNTAX] 😁😁😁 = Llamada a método correcta => metodo: " + tokens.get(idIndex).getLexeme() + "\n");
                         return true;
                     } else {
-                        this.errorsTable.addErrorTableItem(new ErrorTableItem("Falta un paréntesis cerrado en llamada a método", tokens.get(currentIndex).getLine(), tokens.get(currentIndex).getColumn()));
+                        this.errorsTable.addErrorTableItem(new ErrorTableItem("Falta un paréntesis cerrado en llamada a método", tokens.get(currentIndex-1).getLine(), tokens.get(currentIndex-1).getColumn()));
                         System.out.println("Falta un paréntesis cerrado en llamada a método");
                         return false;
                     }
@@ -113,9 +114,9 @@ public class SyntaxAnalyzer {
                     return false;
                 }
             } else {
+                currentIndex = checkpoint;
                 this.errorsTable.addErrorTableItem(new ErrorTableItem("Se esperaba un paréntesis abierto para la llamada a método", tokens.get(currentIndex).getLine(), tokens.get(currentIndex).getColumn()));
                 System.out.println("Se esperaba un paréntesis abierto para la llamada a método.");
-                currentIndex = checkpoint;
                 return false;
             }
         }
