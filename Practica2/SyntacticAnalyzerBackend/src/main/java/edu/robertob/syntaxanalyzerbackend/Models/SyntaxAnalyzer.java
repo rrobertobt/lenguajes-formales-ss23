@@ -50,7 +50,21 @@ public class SyntaxAnalyzer {
             || match(TokenType.OPERATOR_ASSIGNMENT_MOD) || match(TokenType.OPERATOR_ASSIGNMENT_EXP)
             ) {
                 indexFromAssToken = currentIndex;
-                if (expression()) {
+                if (ternary()) {
+                    for (int i = indexFromAssToken; i < currentIndex; i++) {
+                        if (tokenIsNotCommentOrNewLine(i)) {
+                            value += tokens.get(i).getLexeme();
+                        }
+                    }
+                    // Agregar a la tabla de símbolos
+                    symbolTable.addSymbolTableItem(new SymbolTableItem(name, SymbolType.VARIABLE, value, id.getLine(), id.getColumn()));
+                    // También verifiquemos si esa columna y linea tinen algun error existente, si es así, lo eliminamos
+                    System.out.println("Eliminando error de sintaxis en la expresión: "+id.getLine()+":"+(id.getColumn()+1));
+                    errorsTable.removeErrorTableItem(id.getLine(), id.getColumn());
+                    System.out.println("[SYNTAX] 😁😁😁 = Asignación correcta => id: " + id.getLexeme() + " | valor: " + value + "\n");
+                    return true;
+
+                } else if (expression()) {
                     // Get the value of the expression by going from the token agter the assignment token to the token before the current index
                     for (int i = indexFromAssToken; i < currentIndex; i++) {
                         if (tokenIsNotCommentOrNewLine(i)) {
@@ -143,7 +157,6 @@ public class SyntaxAnalyzer {
         return true;
     }
 
-
     private boolean expression() {
         System.out.println("[SYNTAX] Trying to match expression");
         if (term()) {
@@ -179,6 +192,38 @@ public class SyntaxAnalyzer {
                 return false;
             }
         } else {
+            return false;
+        }
+    }
+
+    private boolean ternary() {
+        System.out.println("[SYNTAX] Trying to match ternary");
+        int checkpoint = currentIndex;
+        if (expression()) {
+            if (match(TokenType.KEYWORD_IF)) {
+                if (expression()) {
+                    if (match(TokenType.KEYWORD_ELSE)) {
+                        if (expression()) {
+                            return true;
+                        } else {
+                            System.out.println("Se esperaba una expresión después de 'else'");
+                            return false;
+                        }
+                    } else {
+                        System.out.println("Se esperaba una declaración 'else'");
+                        return false;
+                    }
+                } else {
+                    System.out.println("Se esperaba una expresión después de 'if'");
+                    return false;
+                }
+            } else {
+                System.out.println("Se esperaba una declaración 'if'");
+                currentIndex = checkpoint;
+                return false;
+            }
+        } else {
+            System.out.println("Se esperaba una expresión antes de la declaración 'if'");
             return false;
         }
     }

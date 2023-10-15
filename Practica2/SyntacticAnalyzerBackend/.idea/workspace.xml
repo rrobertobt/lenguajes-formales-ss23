@@ -10,28 +10,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="960ead9b-9d26-45d2-807d-1b72e3801084" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/robertob/lexicalanalyzerbackend/Controllers/GraphServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/robertob/syntaxanalyzerbackend/Controllers/GraphServlet.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/robertob/lexicalanalyzerbackend/Controllers/MainServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/robertob/syntaxanalyzerbackend/Controllers/MainServlet.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/robertob/lexicalanalyzerbackend/Controllers/SyntaxServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/robertob/syntaxanalyzerbackend/Controllers/SyntaxServlet.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/robertob/lexicalanalyzerbackend/Controllers/Test.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/robertob/syntaxanalyzerbackend/Controllers/Test.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/robertob/lexicalanalyzerbackend/Filters/CORSFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/robertob/syntaxanalyzerbackend/Filters/CORSFilter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/robertob/lexicalanalyzerbackend/Models/LexicalAnalyzer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/robertob/syntaxanalyzerbackend/Models/LexicalAnalyzer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/robertob/lexicalanalyzerbackend/Models/SyntaxAnalyzer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/robertob/syntaxanalyzerbackend/Models/SyntaxAnalyzer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/robertob/lexicalanalyzerbackend/Models/Syntaxis/ErrorTableItem.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/robertob/syntaxanalyzerbackend/Models/Syntaxis/ErrorTableItem.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/robertob/lexicalanalyzerbackend/Models/Syntaxis/ErrorsTable.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/robertob/syntaxanalyzerbackend/Models/Syntaxis/ErrorsTable.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/robertob/lexicalanalyzerbackend/Models/Syntaxis/MethodCallTableItem.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/robertob/syntaxanalyzerbackend/Models/Syntaxis/MethodCallTableItem.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/robertob/lexicalanalyzerbackend/Models/Syntaxis/MethodCallsTable.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/robertob/syntaxanalyzerbackend/Models/Syntaxis/MethodCallsTable.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/robertob/lexicalanalyzerbackend/Models/Syntaxis/SymbolTableItem.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/robertob/syntaxanalyzerbackend/Models/Syntaxis/SymbolTableItem.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/robertob/lexicalanalyzerbackend/Models/Syntaxis/SymbolType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/robertob/syntaxanalyzerbackend/Models/Syntaxis/SymbolType.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/robertob/lexicalanalyzerbackend/Models/Syntaxis/SyntaxEndpointResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/robertob/syntaxanalyzerbackend/Models/Syntaxis/SyntaxEndpointResponse.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/robertob/lexicalanalyzerbackend/Models/Syntaxis/SyntaxSymbolTable.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/robertob/syntaxanalyzerbackend/Models/Syntaxis/SyntaxSymbolTable.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/robertob/lexicalanalyzerbackend/Models/Token.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/robertob/syntaxanalyzerbackend/Models/Token.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/robertob/lexicalanalyzerbackend/Utils/DefinitionsUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/robertob/syntaxanalyzerbackend/Utils/DefinitionsUtils.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/robertob/lexicalanalyzerbackend/Utils/GsonWrapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/robertob/syntaxanalyzerbackend/Utils/GsonWrapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/robertob/lexicalanalyzerbackend/Utils/TokenType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/robertob/syntaxanalyzerbackend/Utils/TokenType.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/robertob/lexicalanalyzerbackend/Utils/TokenUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/robertob/syntaxanalyzerbackend/Utils/TokenUtils.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/edu/robertob/syntaxanalyzerbackend/Models/SyntaxAnalyzer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/robertob/syntaxanalyzerbackend/Models/SyntaxAnalyzer.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -75,22 +56,22 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "feature/manuals-p2",
-    "last_opened_file_path": "/Users/robertob/Developer/Universidad/2023 Segundo Semestre/lenguajes-formales-ss23/Practica2/SyntacticAnalyzerBackend",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "reference.settingsdialog.IDE.editor.colors.Console Font",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;develop&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/robertob/Developer/Universidad/2023 Segundo Semestre/lenguajes-formales-ss23/Practica2/SyntacticAnalyzerBackend&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settingsdialog.IDE.editor.colors.Console Font&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager">
     <configuration name="Tomcat 10.1.6" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local" APPLICATION_SERVER_NAME="Tomcat 10.1.6" ALTERNATIVE_JRE_ENABLED="false" nameIsGenerated="true">
       <option name="OPEN_IN_BROWSER" value="false" />
@@ -191,6 +172,8 @@
       <updated>1697225655733</updated>
       <workItem from="1697225656787" duration="161000" />
       <workItem from="1697245945879" duration="14352000" />
+      <workItem from="1697284460992" duration="701000" />
+      <workItem from="1697352703357" duration="1934000" />
     </task>
     <servers />
   </component>
